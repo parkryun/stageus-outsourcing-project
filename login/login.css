@@ -1,0 +1,80 @@
+body {
+    min-width: 500px;
+    background: #f0f2f5;
+}
+
+#login_logo {
+    color: #1877f2;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 400;
+    margin: 40px 0 30px 0;
+}
+
+#login_content {
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    width: 450px;
+    height: 350px;
+    border: none;
+    border-radius: 8px;
+}
+
+#login_id_container {
+    width: 400px;
+    height: 45px;
+    margin-top: 12px;
+    border: 1px solid #efefef;
+    border-radius: 5px;
+}
+
+#login_pw_container {
+    width: 400px;
+    height: 45px;
+    margin-top: 12px;
+    border: 1px solid #efefef;
+    border-radius: 5px;
+}
+
+#login_button {
+    width: 412px;
+    height: 45px;
+    margin-top: 50px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: #1877f2;
+}
+
+#find_container {
+    width: 400px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    
+}
+
+.find_link {
+    text-decoration: none;
+    color: #1877f2;
+    font-size: 13px;
+}
+
+#join_button_container {
+    margin-top: 18px;
+}
+
+#join_button {
+    width: 128px;  
+    height: 50px;
+    background-color: #42b72a;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+}

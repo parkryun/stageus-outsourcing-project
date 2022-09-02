@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'facebook';
+    src: url('facebookfont.OTF') format('truetype');
+}
+
+body {
+    font-family: 'facebook';
+}
