@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html" pageEncoding="utf-8"%>
-
+<%@page import="java.util.Calendar"%>
 <%@ page import="java.sql.DriverManager" %>
 <%@ page import="java.sql.Connection"%>
 <%@ page import="java.sql.PreparedStatement"%>
@@ -23,14 +23,34 @@
 
     ResultSet result = query.executeQuery();
     ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
-    
-    
+        
     while(result.next()) {
         ArrayList<String> tmpData = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
         tmpData.add(result.getString(3));   
         data.add(tmpData);  //2차원 배열에 이 배열 추가 
     }
 
+//=================================================쿼리2 캘린더
+
+    String sql2 = "SELECT * FROM calendar WHERE userID=?";
+    PreparedStatement query2 = connect.prepareStatement(sql2);
+    query2.setString(1, userID);
+
+    ResultSet result2 = query2.executeQuery();
+    ArrayList<ArrayList<String>> data2 = new ArrayList<ArrayList<String>>();
+    
+    while(result2.next()) {
+        ArrayList<String> tmpData2 = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
+        tmpData2.add(result2.getString(3));   
+        data2.add(tmpData2);  //2차원 배열에 이 배열 추가 
+    }      
+    
+//=================================================날짜
+    
+    Calendar c = Calendar.getInstance(); 
+    int month = c.get(Calendar.MONTH);
+
+    
 %>
 <head>
     <meta charset="UTF-8">
@@ -58,11 +78,9 @@
 
     <div id="diary_container">
         
-        <%=userID%>
-        
         <div id="diary_logo"><%=data.get(0).get(0)%>의 diary</div>
 
-        <form id="diary_write_container">
+        <form action="../calendar/calendar.jsp" id="diary_write_container">
             <div>일정 작성하기</div>
             <div id="diary_content">
                 <textarea name="calendarContent" id="diary_content_text" onfocus="this.value=''">일정을 작성해주세요</textarea>
@@ -72,12 +90,13 @@
             </div>
             <input type="submit" value="작성" id="diary_write_button">
         </form>
+
         <div id="schedule_month">
             <a href="#" class="material-icons">
                 arrow_back
             </a>
             <div id="schedule_container">
-                <div>8월 일정</div>
+                <div><%=month %>월 일정</div>
                 <table id="schedule_content">
                     <tr>
                         <th>14일</th>
@@ -90,10 +109,10 @@
                 </table>
                 <div id="schedule_remove_update">
                     <div id="schedule_update">
-                        <input type="button" value="일정 수정" id="schedule_update_button">
+                        <input type="button" value="일정 수정" id="schedule_update_button" onclick="calendarUpdate()">
                     </div>
                     <div id="schedule_remove">
-                        <input type="button" value="일정 삭제" id="schedule_remove_button" onclick="test()">
+                        <input type="button" value="일정 삭제" id="schedule_remove_button" onclick="calendarRemove()">
                     </div>
                 </div>
             </div>
@@ -152,9 +171,18 @@
         </div> -->
         
         <script>
-            function test() {
+            function calendarUpdate() {
                 alert("권한 없음")
+            }
+
+            function calendarRemove() {
+                if(!confirm("삭제하시겠습니까?")) {
+                    location.href="../main/main.jsp"
                 }
+                else {
+                    location.href="../calendar/calendar_remove.jsp"
+                }
+            }
             
         </script>
 </body>
