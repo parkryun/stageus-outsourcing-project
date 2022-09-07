@@ -11,15 +11,15 @@
     request.setCharacterEncoding("utf-8");
 
 
-    String userID = (String)session.getAttribute("userID");
+    String team_Name = request.getParameter("team_Name");
 
     
     Class.forName("com.mysql.jdbc.Driver"); // 우리가 설치한 connecter 파일 가져오는 줄
     Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/outsourcing", "cono", "1234");
 
-    String sql = "SELECT * FROM users WHERE userID=?";
+    String sql = "SELECT * FROM users WHERE userName=?";
     PreparedStatement query = connect.prepareStatement(sql);
-    query.setString(1, userID);
+    query.setString(1, team_Name);
 
     ResultSet result = query.executeQuery();
     ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
@@ -27,14 +27,16 @@
     while(result.next()) {
         ArrayList<String> tmpData = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
         tmpData.add(result.getString(3));   
+        tmpData.add(result.getString(1));   
         data.add(tmpData);  //2차원 배열에 이 배열 추가 
     }
 
 //=================================================쿼리2 캘린더
+    String team_ID = data.get(0).get(1);
 
     String sql2 = "SELECT * FROM calendar WHERE userID=?";
     PreparedStatement query2 = connect.prepareStatement(sql2);
-    query2.setString(1, userID);
+    query2.setString(1, team_ID);
 
     ResultSet result2 = query2.executeQuery();
     ArrayList<ArrayList<String>> data2 = new ArrayList<ArrayList<String>>();
@@ -45,7 +47,7 @@
         tmpData2.add(result2.getString(3));   
         data2.add(tmpData2);  //2차원 배열에 이 배열 추가 
     }      
-    //=================================================쿼리3 사용자
+    //=================================================쿼리3 사이드바 사용자
 
     String sql3 = "SELECT * FROM users";
     PreparedStatement query3 = connect.prepareStatement(sql3);
@@ -93,16 +95,6 @@
     <div id="diary_container">
         
         <div id="diary_logo"><%=data.get(0).get(0)%>의 diary</div>
-        <form action="../calendar/calendar.jsp" id="diary_write_container">
-            <div>일정 작성하기</div>
-            <div id="diary_content">
-                <textarea name="calendarContent" id="diary_content_text" onfocus="this.value=''">일정을 작성해주세요</textarea>
-            </div>
-            <div id="diary_date">
-                <input type="date" name="calendarDate" id="calendar_date">
-            </div>
-            <input type="submit" value="작성" id="diary_write_button">
-        </form>
 
         <div id="schedule_month">
             <a href="#" class="material-icons">
@@ -132,14 +124,7 @@
                         <td>인사 발표</td>
                     </tr>
                 </table>
-                <div id="schedule_remove_update">
-                    <div id="schedule_update">
-                        <input type="button" value="일정 수정" id="schedule_update_button" onclick="calendarUpdate()">
-                    </div>
-                    <div id="schedule_remove">
-                        <input type="button" value="일정 삭제" id="schedule_remove_button" onclick="calendarRemove()">
-                    </div>
-                </div>
+
             </div>
 
             <a href="#" class="material-icons">
@@ -179,13 +164,8 @@
                             <%
                             if(data3.size() != 0) {
                             for(int i = 0; i < data3.size(); i++) {
-                            String team_Name = <%=data3.get(i).get(0)%>;
                         %>
                         <li>
-                            <form action="user_main.jsp">
-                                <div name="team_Name"><%=team_Name%></div>
-                                <input type="submit" value="<%=team_Name%>">
-                            </form>
                             <a href="user_main.jsp"><%=data3.get(i).get(0)%></a>
                         </li>
                         <%
