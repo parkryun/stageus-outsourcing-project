@@ -16,30 +16,23 @@
     String userEmail = request.getParameter("userEmail");
     String department = request.getParameter("department");
     String position = request.getParameter("position");
-    
 
-
-    //여기서 데이터 베이스 조회하고 
-    //조회하려면 무조건 여기로 들어와야해 
-
-    //데이터베이스 연결
-    Class.forName("com.mysql.jdbc.Driver"); // 우리가 설치한 connecter 파일 가져오는 줄
+    Class.forName("com.mysql.jdbc.Driver"); 
     Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/outsourcing", "cono", "1234");
+    
+    if(!userID.equals("") && !userPW.equals("") && !userName.equals("") && !userPhoneNum.equals("") && !userEmail.equals("")) {
+        String sql = "INSERT INTO users (userID, userPW, userName, userEmail, department, userPhoneNum, position) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement query = connect.prepareStatement(sql);
+        query.setString(1, userID);
+        query.setString(2, userPW);
+        query.setString(3, userName);
+        query.setString(4, userEmail);
+        query.setString(5, department);
+        query.setString(6, userPhoneNum);
+        query.setString(7, position);
 
-    //SQL문 준비
-    String sql = "INSERT INTO users (userID, userPW, userName, userEmail, department, userPhoneNum, position) VALUES(?, ?, ?, ?, ?, ?, ?)";
-    PreparedStatement query = connect.prepareStatement(sql);
-    query.setString(1, userID);
-    query.setString(2, userPW);
-    query.setString(3, userName);
-    query.setString(4, userEmail);
-    query.setString(5, department);
-    query.setString(6, userPhoneNum);
-    query.setString(7, position);
-
-
-    //SQL문 전송
-    query.executeUpdate();
+        query.executeUpdate();
+    }
 %>
 
 <!-- 여기 사이는 jsp로 인식됨 -->
@@ -54,8 +47,14 @@
 <body>
 
     <script>
-        alert("회원가입 완료!")
-        location.href="../login/login.jsp"
+        if("<%=userID%>" != "" && "<%=userPW%>" != "" && "<%=userName%>" != "" && "<%=userPhoneNum%>" != "" && "<%=userEmail%>" != "") {
+            alert("회원가입 완료!")
+            location.href="../login/login.jsp"
+        }
+        else {
+            alert('필수사항을 입력하세요')
+            location.href="../join/join.jsp"
+        }
     </script>
     
 </body>

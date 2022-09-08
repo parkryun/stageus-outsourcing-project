@@ -46,7 +46,7 @@
                 location.href="../login/login.jsp"
             }
             else {
-                alert("전화번호가 일치하지 않습니다.")
+                alert("이름과 전화번호가 일치하지 않습니다.")
                 location.href="find_id.jsp"
             }
     </script>

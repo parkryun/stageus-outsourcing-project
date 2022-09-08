@@ -24,3 +24,12 @@ header {
     
 }
 
+
+@media screen and (max-width: 400px) {
+    header {
+        width: 390px;
+        height: 50px;
+        margin: -8px -8px 0px -8px ;
+    }
+
+}

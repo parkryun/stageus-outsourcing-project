@@ -5,7 +5,6 @@
 <%@ page import="java.sql.PreparedStatement"%>
 
 <%
-    // 받아오는 값에 대한 인코딩 지정
     request.setCharacterEncoding("utf-8");
 
     String userID = (String)session.getAttribute("userID");
@@ -13,10 +12,9 @@
     String calendarContent = request.getParameter("calendarContent");
     String calendarDate = request.getParameter("calendarDate");
 
-    Class.forName("com.mysql.jdbc.Driver"); // 우리가 설치한 connecter 파일 가져오는 줄
+    Class.forName("com.mysql.jdbc.Driver");
     Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/outsourcing", "cono", "1234");
 
-    //SQL문 준비
     String sql = "INSERT INTO calendar (calendarContent, calendarDate, userID) VALUES(?, ?, ?)";
     PreparedStatement query = connect.prepareStatement(sql);
     

@@ -78,4 +78,47 @@ body {
     border-radius: 5px;
     color: #fff;
     font-size: 16px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 400px) {
+    body {
+        min-width: 0;
+    }
+    
+    #login_logo {
+        font-size: 30px;
+        margin: 20px 0 30px 0;
+    }
+    
+    #login_content {
+        width: 350px;
+    }
+    
+    #login_id_container {
+        width: 320px;
+    }
+    
+    #login_pw_container {
+        width: 320px;
+    }
+    
+    #login_button {
+        width: 320px;
+    }
+    
+    #find_container {
+        width: 320px;
+    }
+    
+    #join_button_container {
+        margin-top: 18px;
+    }
+    
+    #join_button {
+        width: 128px;  
+        height: 40px;
+        font-size: 15px;
+    }
+
 }

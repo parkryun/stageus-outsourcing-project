@@ -30,6 +30,7 @@
         tmpData.add(result.getString(3));   
         data.add(tmpData);  //2차원 배열에 이 배열 추가 
     }
+    session.setAttribute("userID", userID);
 
 %>
 <head>
@@ -45,7 +46,7 @@
                 location.href="update_pw.jsp"
             }
             else {
-                alert("비밀번호가 일치하지 않습니다.")
+                alert("아이디와 이름이 일치하지않습니다.")
                 location.href="find_pw.jsp"
             }
     </script>

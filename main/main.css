@@ -141,6 +141,84 @@ textarea:focus {
 
 
 
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 400px) {
+    #diary_container {
+        display: flex;
+        flex-direction: column;
+        margin-left: 0px;
+        width: 360px;
 
+    }
+
+    #diary_logo {
+        font-size: 30px;
+        margin: 0 0 20px 0;
+    }
+
+    #diary_write_container {
+        margin-bottom: 60px;
+        padding-top: 15px;
+        font-size: 18px;
+        width: 350px;
+    }
+
+    #diary_content {
+        margin-top: 15px;
+        width: 340px;
+        height: 70px;
+    }
+
+    #diary_content_text {
+        font-size: 16px;
+        width: 320px;
+        height: 50px;
+    }
+
+    #diary_write_button {
+        margin: 15px 0 20px 0;
+        width: 340px;
+        height: 35px;
+    }
+
+    #schedule_month {
+        width: 350px;
+    }
+
+    .material-icons {
+        margin-top: 30px;
+    }
+
+    #schedule_container {
+        margin-bottom: 60px;
+        padding-top: 15px;
+        font-size: 20px;
+        width: 500px;
+    }
+
+    .schedule_content {
+        font-size: 15px;
+    }
+
+    #schedule_remove_update {
+        width: 350px;    
+    }
+    
+    #schedule_remove_button {
+        width: 60px;
+        height: 32px;
+        font-size: 12px;
+    }
+
+    #schedule_update_button {
+        width: 60px;
+        height: 32px;
+        font-size: 12px;
+    }
+
+    #prev_next_month_container {
+        display: flex;
+        justify-content: space-between;
+        width: 350px;
+
+    }
 }

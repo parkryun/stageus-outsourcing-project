@@ -89,8 +89,10 @@
 <body>
     <%
       String headerPage = "../header/logout_header.jsp";
+      String sidebarPage = "../side_bar/side_bar.jsp";
     %>
     <jsp:include page="<%=headerPage%>" flush="false"/>
+    <jsp:include page="<%=sidebarPage%>" flush="false"/>
 
     <div id="diary_container">
         
@@ -115,7 +117,7 @@
                         }}
                         else {
                     %>
-                            일정이 없습니다.
+                            <h1>일정이 없습니다.</h1>
                     <%
                         }
                     %>
@@ -137,76 +139,4 @@
     </div>
     
 
-    <!-- 여기는 side_bar include 하자 -->
-    <div id="wrapper">
-        <div class="topbar" style="position: absolute; top:0;">
-            <!-- 왼쪽 메뉴 -->
-            <div class="left_sub_menu">
-                <div class="sidebar-inner">
-                    <div id="sidebar-menu">
-                        <ul>
-                            <li class="has_sub"><a href="javascript:void(0);" class="waves-effect">
-                                <span class="material-symbols-outlined">
-                                    menu
-                                </span>
-                            </a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- 왼쪽 서브 메뉴 -->
-            <div class="left_sub_menu">
-                <div class="sub_menu">
-                    <h2>부서</h2>
-                    <ul class="big_menu">
-                        <li>개발팀 <i class="arrow fas fa-angle-right"></i></li>
-                        <ul class="small_menu">
-                            <%
-                            if(data3.size() != 0) {
-                            for(int i = 0; i < data3.size(); i++) {
-                        %>
-                        <li>
-                            <a href="user_main.jsp"><%=data3.get(i).get(0)%></a>
-                        </li>
-                        <%
-                            }}
-                            else {
-                        %>
-                                회원이 없습니다.
-                        <%
-                            }
-                        %>
-                        </ul>
-                    </ul>
-                    <ul class="big_menu">
-                        <li>인사팀 <i class="arrow fas fa-angle-right"></i></li>
-                        <ul class="small_menu">
-                        </ul>
-                    </ul>
-                    <ul class="big_menu">
-                        <li>마케팅팀</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="overlay"></div>
-        </div>
-        
-        <script>
-
-                $(".has_sub").click(function () {
-                    $(".left_sub_menu").fadeToggle(300);
-                    $('.overlay').fadeIn();
-                });
-                // 왼쪽메뉴 드롭다운
-                
-                $(".sub_menu ul.big_menu").click(function () {
-                    $("ul", this).slideToggle(300);
-                    $(".sub_menu ul.small_menu").fadeIn();
-                });
-                // 외부 클릭 시 좌측 사이드 메뉴 숨기기
-                $('.overlay').on('click', function () {
-                    $('.left_sub_menu').fadeOut();
-                    $('.hide_sidemenu').fadeIn();
-                });
-        </script>
 </body>

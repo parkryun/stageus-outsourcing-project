@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html" pageEncoding="utf-8"%>
-<%@page import="java.util.Calendar"%>
+<%@ page import="java.util.Calendar"%>
+<%@ page import="java.text.SimpleDateFormat" %>
+
 <%@ page import="java.sql.DriverManager" %>
 <%@ page import="java.sql.Connection"%>
 <%@ page import="java.sql.PreparedStatement"%>
@@ -41,11 +43,12 @@
     
     while(result2.next()) {
         ArrayList<String> tmpData2 = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
-        tmpData2.add(result2.getString(2));  
-        tmpData2.add(result2.getString(3));   
+        tmpData2.add(result2.getString(2)); // 일정 내용  
+        tmpData2.add(result2.getString(3)); // 일정 날짜
         data2.add(tmpData2);  //2차원 배열에 이 배열 추가 
     }      
-    //=================================================쿼리3 사용자
+
+    //=================================================쿼리3 팀원
 
     String sql3 = "SELECT * FROM users";
     PreparedStatement query3 = connect.prepareStatement(sql3);
@@ -58,7 +61,7 @@
         tmpData3.add(result3.getString(3));  
         data3.add(tmpData3);  //2차원 배열에 이 배열 추가 
     }  
-    
+    String team_Name = data3.get(0).get(0);
 //=================================================날짜
     
     Calendar c = Calendar.getInstance(); 
@@ -76,19 +79,22 @@
     <link rel="stylesheet" type="text/css" href="../header/header.css">
 
 
-    <link rel="stylesheet" type="text/css" href="../side_bar/side_bar.css">
     <link rel="stylesheet" type="text/css" href="../header/header.css">
     <link rel="stylesheet" type="text/css" href="assets/fontawesome-free/css/all.min.css">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <link rel="stylesheet" type="text/css" href="../side_bar/side_bar.css">
 </head>
 
 <body>
     <%
       String headerPage = "../header/logout_header.jsp";
+      String sidebarPage = "../side_bar/side_bar.jsp";
     %>
     <jsp:include page="<%=headerPage%>" flush="false"/>
+    <jsp:include page="<%=sidebarPage%>" flush="false"/>
 
     <div id="diary_container">
         
@@ -105,9 +111,6 @@
         </form>
 
         <div id="schedule_month">
-            <a href="#" class="material-icons">
-                arrow_back
-            </a>
             <div id="schedule_container">
                 <div><%=month %>월 일정</div>
                 <table class="schedule_content" id="schedule_content_box">
@@ -115,7 +118,11 @@
                         if(data2.size() != 0) {
                         for(int i = 0; i < data2.size(); i++) {
                     %>
+
+
+
                     <tr>
+                        
                         <th><%=data2.get(i).get(1)%> 일</th>
                         <td><%=data2.get(i).get(0)%></td>
                     </tr>
@@ -132,6 +139,7 @@
                         <td>인사 발표</td>
                     </tr>
                 </table>
+                
                 <div id="schedule_remove_update">
                     <div id="schedule_update">
                         <input type="button" value="일정 수정" id="schedule_update_button" onclick="calendarUpdate()">
@@ -141,92 +149,16 @@
                     </div>
                 </div>
             </div>
-
+        </div>
+        <div id="prev_next_month_container">
+            <a href="#" class="material-icons">
+                arrow_back
+            </a>
             <a href="#" class="material-icons">
                 arrow_forward
             </a>
-
         </div>
-
-
     </div>
     
-
-    <!-- 여기는 side_bar include 하자 -->
-    <div id="wrapper">
-        <div class="topbar" style="position: absolute; top:0;">
-            <!-- 왼쪽 메뉴 -->
-            <div class="left_sub_menu">
-                <div class="sidebar-inner">
-                    <div id="sidebar-menu">
-                        <ul>
-                            <li class="has_sub"><a href="javascript:void(0);" class="waves-effect">
-                                <span class="material-symbols-outlined">
-                                    menu
-                                </span>
-                            </a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- 왼쪽 서브 메뉴 -->
-            <div class="left_sub_menu">
-                <div class="sub_menu">
-                    <h2>부서</h2>
-                    <ul class="big_menu">
-                        <li>개발팀 <i class="arrow fas fa-angle-right"></i></li>
-                        <ul class="small_menu">
-                            <%
-                            if(data3.size() != 0) {
-                            for(int i = 0; i < data3.size(); i++) {
-                            String team_Name = <%=data3.get(i).get(0)%>;
-                        %>
-                        <li>
-                            <form action="user_main.jsp">
-                                <div name="team_Name"><%=team_Name%></div>
-                                <input type="submit" value="<%=team_Name%>">
-                            </form>
-                            <a href="user_main.jsp"><%=data3.get(i).get(0)%></a>
-                        </li>
-                        <%
-                            }}
-                            else {
-                        %>
-                                회원이 없습니다.
-                        <%
-                            }
-                        %>
-                        </ul>
-                    </ul>
-                    <ul class="big_menu">
-                        <li>인사팀 <i class="arrow fas fa-angle-right"></i></li>
-                        <ul class="small_menu">
-                        </ul>
-                    </ul>
-                    <ul class="big_menu">
-                        <li>마케팅팀</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="overlay"></div>
-        </div>
-        
-        <script>
-
-                $(".has_sub").click(function () {
-                    $(".left_sub_menu").fadeToggle(300);
-                    $('.overlay').fadeIn();
-                });
-                // 왼쪽메뉴 드롭다운
-                
-                $(".sub_menu ul.big_menu").click(function () {
-                    $("ul", this).slideToggle(300);
-                    $(".sub_menu ul.small_menu").fadeIn();
-                });
-                // 외부 클릭 시 좌측 사이드 메뉴 숨기기
-                $('.overlay').on('click', function () {
-                    $('.left_sub_menu').fadeOut();
-                    $('.hide_sidemenu').fadeIn();
-                });
-        </script>
+    <script src="main.js"></script>    
 </body>
