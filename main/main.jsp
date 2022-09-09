@@ -9,7 +9,12 @@
 <%@ page import="java.util.ArrayList"%>
 
 <%
-    // 받아오는 값에 대한 인코딩 지정
+    //날짜
+    Calendar c = Calendar.getInstance(); 
+    int month = c.get(Calendar.MONTH);
+    String calendarDate_month = Integer.toString(intValue1);
+
+    // =================================================받아오는 값에 대한 인코딩 지정
     request.setCharacterEncoding("utf-8");
 
 
@@ -34,21 +39,22 @@
 
 //=================================================쿼리2 캘린더
 
-    String sql2 = "SELECT * FROM calendar WHERE userID=?";
+    String sql2 = "SELECT calendarContent, DAY(calendarDate) FROM calendar WHERE userID=?" AND MONTH(calendarDate)=?; // 조건으로 해당 날짜 나중에 팀 할때도 조건으로 올때도 월을 넘겨줘야지 다음달 할때도 폼에다가 10 벨류값 넣어서 보내줘서 가져오는거
     PreparedStatement query2 = connect.prepareStatement(sql2);
     query2.setString(1, userID);
+    query2.setString(2, calendarDate_month);
 
     ResultSet result2 = query2.executeQuery();
-    ArrayList<ArrayList<String>> data2 = new ArrayList<ArrayList<String>>();
+    ArrayList<ArrayList<String>> data2 = new ArrayList<ArrayList<String>>(); // var변수는 data2로 해서 배열 가져옴
     
     while(result2.next()) {
         ArrayList<String> tmpData2 = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
-        tmpData2.add(result2.getString(2)); // 일정 내용  
-        tmpData2.add(result2.getString(3)); // 일정 날짜
+        tmpData2.add(result2.getString(1)); // 일정 내용  
+        tmpData2.add(result2.getString(2)); // 일정 일
         data2.add(tmpData2);  //2차원 배열에 이 배열 추가 
     }      
 
-    //=================================================쿼리3 팀원
+//=================================================쿼리3 팀원
 
     String sql3 = "SELECT * FROM users";
     PreparedStatement query3 = connect.prepareStatement(sql3);
@@ -62,10 +68,6 @@
         data3.add(tmpData3);  //2차원 배열에 이 배열 추가 
     }  
     String team_Name = data3.get(0).get(0);
-//=================================================날짜
-    
-    Calendar c = Calendar.getInstance(); 
-    int month = c.get(Calendar.MONTH);
 
     
 %>
