@@ -22,46 +22,20 @@
     Class.forName("com.mysql.jdbc.Driver"); 
     Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/outsourcing", "cono", "1234");
 
-    // 아이디 예외처리
-    String ID_check = "ㅁㅁ";
+    // 빈칸 예외처리
+    if(!userID.equals("") && !userPW.equals("") && !userName.equals("") && !userPhoneNum.equals("") && !userEmail.equals("")) {
+        String sql2 = "INSERT INTO users (userID, userPW, userName, userEmail, department, userPhoneNum, position) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement query2 = connect.prepareStatement(sql2);
+        query2.setString(1, userID);
+        query2.setString(2, userPW);
+        query2.setString(3, userName);
+        query2.setString(4, userEmail);
+        query2.setString(5, department);
+        query2.setString(6, userPhoneNum);
+        query2.setString(7, position);
 
-    String sql = "SELECT userID FROM users";
-    PreparedStatement query = connect.prepareStatement(sql);
-
-    ResultSet result = query.executeQuery();
-    ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
-
-    while(result.next()) {
-        ArrayList<String> tmpData = new ArrayList<String>();
-        tmpData.add(result.getString(1));
-        data.add(tmpData);
-    }
-
-    for(int index = 0; index < data.length(); index++) {
-        if(data[index][0] == userID) {
-            ID_check = data[index][0];
-            break;
-        }
-    }
-
-    if(ID_check == userID) {
-        response.sendRedirect("../join/join_check2.jsp");
-    }
-    else {
-        // 빈칸 예외처리
-        if(!userID.equals("") && !userPW.equals("") && !userName.equals("") && !userPhoneNum.equals("") && !userEmail.equals("")) {
-            String sql2 = "INSERT INTO users (userID, userPW, userName, userEmail, department, userPhoneNum, position) VALUES(?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement query2 = connect.prepareStatement(sql2);
-            query2.setString(1, userID);
-            query2.setString(2, userPW);
-            query2.setString(3, userName);
-            query2.setString(4, userEmail);
-            query2.setString(5, department);
-            query2.setString(6, userPhoneNum);
-            query2.setString(7, position);
-
-            query2.executeUpdate();
-        }
+        query2.executeUpdate();
+    
     }
     
 %>

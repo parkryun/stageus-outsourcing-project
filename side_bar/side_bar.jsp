@@ -10,10 +10,26 @@
     // 받아오는 값에 대한 인코딩 지정
     request.setCharacterEncoding("utf-8");
 
-    //=================================================쿼리3 사용자
+    String userID = (String)session.getAttribute("userID");
+
     Class.forName("com.mysql.jdbc.Driver"); // 우리가 설치한 connecter 파일 가져오는 줄
     Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/outsourcing", "cono", "1234");
 
+    String sql = "SELECT department, position FROM users WHERE userID=?";
+    PreparedStatement query = connect.prepareStatement(sql);
+    query.setString(1, userID);
+
+    ResultSet result = query.executeQuery();
+    ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
+        
+    while(result.next()) {
+        ArrayList<String> tmpData = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
+        tmpData.add('"' + result.getString(1) + '"');   //부서
+        tmpData.add('"' + result.getString(2) + '"');   //직급
+        data.add(tmpData);  //2차원 배열에 이 배열 추가 
+    }
+
+    //=================================================쿼리3 사용자
     String sql3 = "SELECT * FROM users";
     PreparedStatement query3 = connect.prepareStatement(sql3);
 
@@ -125,72 +141,128 @@
         </script>
         <script>
             var workerArray = '<%=data3%>'
+            var departmentAndPositionArray = '<%=data%>'
             var team_development = '개발팀'
             var team_hr = '인사팀'
             var team_marketing = '마케팅팀'
+            var president = '사장'
+            var teamLeader = '팀장'
+            var Manager = '대리'
+            var staff = '사원'
 
             workerArray = JSON.parse(workerArray)
-
-            if(workerArray.length == 0) {
-                alert("팀원 없을 때 div")
+            departmentAndPositionArray = JSON.parse(departmentAndPositionArray)
+            
+            if(departmentAndPositionArray[0][1] == president) { // 사장일때
+                workerList()
             }
-            else {
-                for(var index = 0; index < workerArray.length; index++) {
-                    if(workerArray[index][1] == team_development) { // 개발팀
-                        var workerLi = document.createElement('li')
-                        var workerForm = document.createElement('form')
-                        var workerSubmit = document.createElement('input')
-
-                        workerForm.action = "../main/user_main.jsp"
-
-                        workerSubmit.setAttribute("type", "submit")
-                        workerSubmit.setAttribute("name", "team_name")
-                        workerSubmit.setAttribute("value", workerArray[index][0]) 
-
-                        document.getElementById("team_development").appendChild(workerLi)
-                        workerLi.appendChild(workerForm)
-                        workerForm.appendChild(workerSubmit)
-
-                    }
-                    else if(workerArray[index][1] == team_hr) { // 인사팀
-                        var workerLi = document.createElement('li')
-                        var workerForm = document.createElement('form')
-                        var workerSubmit = document.createElement('input')
-
-                        workerForm.action = "../main/user_main.jsp"
-
-                        workerSubmit.setAttribute("type", "submit")
-                        workerSubmit.setAttribute("name", "team_name")
-                        workerSubmit.setAttribute("value", workerArray[index][0])
-
-                        document.getElementById("team_hr").appendChild(workerLi)
-                        workerLi.appendChild(workerForm)
-                        workerForm.appendChild(workerSubmit)
-
-                    }
-                    else if(workerArray[index][1] == team_marketing) { // 마케팅팀
-                        var workerLi = document.createElement('li')
-                        var workerForm = document.createElement('form')
-                        var workerSubmit = document.createElement('input')
-
-                        workerForm.action = "../main/user_main.jsp"
-
-                        workerSubmit.setAttribute("type", "submit")
-                        workerSubmit.setAttribute("name", "team_name")
-                        workerSubmit.setAttribute("value", workerArray[index][0])
-
-                        document.getElementById("team_marketing").appendChild(workerLi)
-                        workerLi.appendChild(workerForm)
-                        workerForm.appendChild(workerSubmit)
-
-                    }
-                    else {
-                        continue
-                    }
+            else if(departmentAndPositionArray[0][1] == teamLeader) { // 팀장일 때
+                workerList()
+                if(departmentAndPositionArray[0][0] == team_development) {
+                    submitDisabledHr()
+                    submitDisabledMarketing()
                 }
+                else if(departmentAndPositionArray[0][0] == team_hr) {
+                    submitDisabledDevelopment()
+                    submitDisabledMarketing()
+                }
+                else {
+                    submitDisabledDevelopment()
+                    submitDisabledHr()
+                }
+            }
+            else { // 대리와 사원
+                workerList()
+                submitDisabledDevelopment()
+                submitDisabledHr()
+                submitDisabledMarketing()
             }
 
             
-            console.log(workerArray)
+            
+
+function workerList() {
+        if(workerArray.length == 0) {
+            alert("팀원 없을 때 div")
+        }
+        else {
+            for(var index = 0; index < workerArray.length; index++) {
+                if(workerArray[index][1] == team_development) { // 개발팀
+                    var workerLi = document.createElement('li')
+                    var workerForm = document.createElement('form')
+                    var workerSubmit = document.createElement('input')
+
+                    workerForm.action = "../main/user_main.jsp"
+
+                    workerSubmit.setAttribute("type", "submit")
+                    workerSubmit.setAttribute("name", "team_name")
+                    workerSubmit.setAttribute("value", workerArray[index][0]) 
+                    workerSubmit.className = "team_development_submit"
+
+                    document.getElementById("team_development").appendChild(workerLi)
+                    workerLi.appendChild(workerForm)
+                    workerForm.appendChild(workerSubmit)
+                }
+                else if(workerArray[index][1] == team_hr) { // 인사팀
+                    var workerLi = document.createElement('li')
+                    var workerForm = document.createElement('form')
+                    var workerSubmit = document.createElement('input')
+
+                    workerForm.action = "../main/user_main.jsp"
+
+                    workerSubmit.setAttribute("type", "submit")
+                    workerSubmit.setAttribute("name", "team_name")
+                    workerSubmit.setAttribute("value", workerArray[index][0])
+                    workerSubmit.className = "team_hr_submit"
+
+                    document.getElementById("team_hr").appendChild(workerLi)
+                    workerLi.appendChild(workerForm)
+                    workerForm.appendChild(workerSubmit)
+                }
+                else if(workerArray[index][1] == team_marketing) { // 마케팅팀
+                    var workerLi = document.createElement('li')
+                    var workerForm = document.createElement('form')
+                    var workerSubmit = document.createElement('input')
+
+                    workerForm.action = "../main/user_main.jsp"
+
+                    workerSubmit.setAttribute("type", "submit")
+                    workerSubmit.setAttribute("name", "team_name")
+                    workerSubmit.setAttribute("value", workerArray[index][0])
+                    workerSubmit.className = "team_marketing_submit"
+
+                    document.getElementById("team_marketing").appendChild(workerLi)
+                    workerLi.appendChild(workerForm)
+                    workerForm.appendChild(workerSubmit)
+                }
+                else {
+                    continue
+                }
+            }
+        }
+} 
+
+function submitDisabledDevelopment() {
+    var target = document.getElementsByClassName("team_development_submit")
+    for(var index = 0; index < target.length; index++) {
+        target[index].disabled = true
+    }
+}
+
+function submitDisabledHr() {
+    var target = document.getElementsByClassName("team_hr_submit")
+    for(var index = 0; index < target.length; index++) {
+        target[index].disabled = true
+    }
+}
+
+function submitDisabledMarketing() {
+    var target = document.getElementsByClassName("team_marketing_submit")
+    for(var index = 0; index < target.length; index++) {
+        target[index].disabled = true
+    }
+}
+            
+            
         </script>
 </body>

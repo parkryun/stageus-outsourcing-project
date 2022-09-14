@@ -9,9 +9,16 @@
 <%@ page import="java.util.ArrayList"%>
 
 <%
-    //날짜
+    // 캘린더 날짜
     String calendarDate_month = request.getParameter("calendarDate_month");
     int month = Integer.parseInt(calendarDate_month);
+
+    // 현재 날짜
+    Calendar c = Calendar.getInstance(); 
+    int today_month = c.get(Calendar.MONTH) + 1;
+    int today_year = c.get(Calendar.YEAR);
+    int today_day = c.get(Calendar.DATE);
+
     // =================================================받아오는 값에 대한 인코딩 지정
     request.setCharacterEncoding("utf-8");
 
@@ -37,7 +44,7 @@
 
 //=================================================쿼리2 캘린더
 
-    String sql2 = "SELECT calendarContent, DAY(calendarDate) FROM calendar WHERE userID=? AND MONTH(calendarDate)=? ORDER BY DAY(calendarDate) ASC"; // 조건으로 해당 날짜 나중에 팀 할때도 조건으로 올때도 월을 넘겨줘야지 다음달 할때도 폼에다가 10 벨류값 넣어서 보내줘서 가져오는거
+    String sql2 = "SELECT calendarContent, DAY(calendarDate), calendarDate FROM calendar WHERE userID=? AND MONTH(calendarDate)=? ORDER BY DAY(calendarDate) ASC"; // 조건으로 해당 날짜 나중에 팀 할때도 조건으로 올때도 월을 넘겨줘야지 다음달 할때도 폼에다가 10 벨류값 넣어서 보내줘서 가져오는거
     PreparedStatement query2 = connect.prepareStatement(sql2);
     query2.setString(1, userID);
     query2.setString(2, calendarDate_month);
@@ -47,8 +54,9 @@
     
     while(result2.next()) {
         ArrayList<String> tmpData2 = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
-        tmpData2.add(result2.getString(1)); // 일정 내용  
+        tmpData2.add('"' + result2.getString(1) + '"'); // 일정 내용  
         tmpData2.add(result2.getString(2)); // 일정 일
+        tmpData2.add('"' + result2.getString(3) + '"'); // 일정 날짜
         data2.add(tmpData2);  //2차원 배열에 이 배열 추가 
     }      
 
@@ -106,7 +114,7 @@
             <div id="diary_date">
                 <input type="date" name="calendarDate" id="calendar_date">
             </div>
-            <input type="submit" value="작성" id="diary_write_button">
+            <input type="submit" value="작성" id="diary_write_button" onclick="contentCheck()">
         </form>
 
         <div id="schedule_month">
@@ -132,14 +140,17 @@
             <input type="submit" name="calendarDate_month" value="<%=month - 1%>">
         
             <a href="prev_next_month.jsp" class="material-icons" name="calendarDate_month" >
-                arrow_forward
+                arrow_back
             </a>
         </form>
     </div>
     
     <script src="main.js" type="text/javascript"></script>    
     <script>
-        var calendarArray = "<%=data2%>"
+        var today = '<%=today_year%>' + '-0' + '<%=today_month%>' + '-' + '<%=today_day%>'
+        var calendarArray = '<%=data2%>'
+
+        today = Date.parse(today)
         calendarArray = JSON.parse(calendarArray)
 
         console.log(calendarArray)
@@ -147,8 +158,11 @@
         console.log(typeof(calendarArray))
 
         if(calendarArray.length == 0) {
-            alert("awsd")
-            // 일정 없는 div 만들기
+            var calendarTr = document.createElement('tr')
+            var calendarTd = document.createElement('td')
+            document.getElementById('schedule_content_box').appendChild(calendarTr)
+            calendarTr.appendChild(calendarTd)
+            calendarTd.innerHTML = "일정이 없습니다."
         }
         else {
             var calendarTr = document.createElement('tr')
@@ -156,6 +170,7 @@
             document.getElementById('schedule_content_box').appendChild(calendarTr)
             calendarTr.appendChild(calendarTd)
             calendarTd.innerHTML = calendarArray[0][1] + "일 " + "<br>" + calendarArray[0][0]
+            calendar_erase(0)
 
             for(var index = 1; index < calendarArray.length; index++) {
                 if(calendarArray[index][1] != calendarArray[index-1][1]) { // 다른 날일 때  td tr 다 만들기
@@ -164,7 +179,7 @@
                     document.getElementById('schedule_content_box').appendChild(calendarTr)
                     calendarTr.appendChild(calendarTd)
                     calendarTd.innerHTML = calendarArray[index][1] + "일 " + "<br>" + calendarArray[index][0]
-
+                    calendar_erase(index)
                 }
                 else { // 같은 날일 때 td만 만들기
                     var calendarTr = document.createElement('tr')
@@ -172,7 +187,29 @@
                     document.getElementById('schedule_content_box').appendChild(calendarTr)
                     calendarTr.appendChild(calendarTd)
                     calendarTd.innerHTML = calendarArray[index][0]
+
+                    if(today > Date.parse(calendarArray[index][2])) {
+                        calendarTd.innerHTML = "<del>" + calendarArray[index][0] + "</del>"
+                    }
                 }
+            }
+        }
+
+        function calendar_erase(index) {
+            if(today > Date.parse(calendarArray[index][2])) {
+                calendarTd.innerHTML = calendarArray[index][1] + "일 " + "<br>" + "<del>" + calendarArray[index][0] + "</del>"
+            }
+        }
+
+        function contentCheck() {
+            if(document.getElementById("diary_content_text").value == '' || document.getElementById("diary_content_text").value == "일정을 작성해주세요") {
+                console.log(document.getElementById("diary_content_text").value)
+                alert("일정을 작성해주세요")
+                event.preventDefault()
+            }
+            else if(document.getElementById("calendar_date").value == '') {
+                alert("날짜를 선택해주세요")
+                event.preventDefault()
             }
         }
         
