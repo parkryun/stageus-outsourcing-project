@@ -47,6 +47,21 @@ input[type=password] {
     font-size: 12px;
 }
 
+input[type=button] {
+    height: 22px;
+    border: 1px solid #e5e5e5;
+    color: #353535;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+select {
+    height: 22px;
+    border: 1px solid #e5e5e5;
+    color: #353535;
+    font-size: 12px;
+}
+
 #join_logo {
     color: #1877f2;
     text-align: center;

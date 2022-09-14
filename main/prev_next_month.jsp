@@ -10,10 +10,8 @@
 
 <%
     //날짜
-    Calendar c = Calendar.getInstance(); 
-    int month = c.get(Calendar.MONTH) + 1;
-    String calendarDate_month = Integer.toString(month);
-
+    String calendarDate_month = request.getParameter("calendarDate_month");
+    int month = Integer.parseInt(calendarDate_month);
     // =================================================받아오는 값에 대한 인코딩 지정
     request.setCharacterEncoding("utf-8");
 
@@ -49,7 +47,7 @@
     
     while(result2.next()) {
         ArrayList<String> tmpData2 = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
-        tmpData2.add('"' + result2.getString(1) + '"'); // 일정 내용  
+        tmpData2.add(result2.getString(1)); // 일정 내용  
         tmpData2.add(result2.getString(2)); // 일정 일
         data2.add(tmpData2);  //2차원 배열에 이 배열 추가 
     }      
@@ -113,7 +111,7 @@
 
         <div id="schedule_month">
             <div id="schedule_container">
-                <div><%=month %>월 일정</div>
+                <div><%=month%>월 일정</div>
                 <table class="schedule_content" id="schedule_content_box">
                     
                 </table>
@@ -128,6 +126,7 @@
                 </div>
             </div>
         </div>
+        input text에다가 벨류 넣고 히든으로 숨겨버려?
         <form action="prev_next_month.jsp" id="prev_next_month_container">
             <div  value="<%=month - 1%>"></div>
             <input type="submit" name="calendarDate_month" value="<%=month - 1%>">
@@ -140,7 +139,7 @@
     
     <script src="main.js" type="text/javascript"></script>    
     <script>
-        var calendarArray = '<%=data2%>'
+        var calendarArray = "<%=data2%>"
         calendarArray = JSON.parse(calendarArray)
 
         console.log(calendarArray)
@@ -149,7 +148,7 @@
 
         if(calendarArray.length == 0) {
             alert("awsd")
-            // 일정없을 때 div
+            // 일정 없는 div 만들기
         }
         else {
             var calendarTr = document.createElement('tr')
@@ -179,5 +178,3 @@
         
     </script>
 </body>
-
-배열을 읽어왔어 근데 읽어올때 string으로 읽어오잖아? 그걸 다시 배열로 읽어주는 함수를 사용해서 배열이 되었는데

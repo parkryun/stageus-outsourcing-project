@@ -33,7 +33,8 @@
                         <img src="../red_star_img.png">
                     </th> 
                     <td>
-                        <input type="text" name="userID">
+                        <input type="text" name="userID" id="userID">
+                        <input type="button" onclick="idCheck()" name="id_check" value="중복체크">
                     </td>
                 </tr>
                 <tr>
@@ -68,13 +69,26 @@
                     <th>
                         부서
                     </th>
-                    <td><input type="text" name="department"></td>
+                    <td>
+                        <select name="department">
+                            <option value="개발팀">개발팀</option>
+                            <option value="인사팀">인사팀</option>
+                            <option value="마케팅팀">마케팅팀</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <th>
                         직급
                     </th>
-                    <td><input type="text" name="position"></td>
+                    <td>
+                        <select name="position">
+                            <option value="사장">사장</option>
+                            <option value="팀장">팀장</option>
+                            <option value="대리">대리</option>
+                            <option value="사원">사원</option>
+                        </select>
+                    </td>
                 </tr>
             </table>
 
@@ -84,5 +98,16 @@
         </form>
 
     </div>
+
+    <script>
+        function idCheck() {
+            if(document.getElementById("userID").value == "") {
+                alert("아이디를 입력해주세요")
+            }
+            else {
+                window.open("join_id_check_form.jsp", "id_check", "width=400", "height=350")
+            }
+        }
+    </script>
 </body>
 </html>

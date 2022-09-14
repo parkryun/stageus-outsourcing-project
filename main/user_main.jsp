@@ -11,7 +11,7 @@
     request.setCharacterEncoding("utf-8");
 
 
-    String team_Name = request.getParameter("team_Name");
+    String team_name = request.getParameter("team_name");
 
     
     Class.forName("com.mysql.jdbc.Driver"); // 우리가 설치한 connecter 파일 가져오는 줄
@@ -19,7 +19,7 @@
 
     String sql = "SELECT * FROM users WHERE userName=?";
     PreparedStatement query = connect.prepareStatement(sql);
-    query.setString(1, team_Name);
+    query.setString(1, team_name);
 
     ResultSet result = query.executeQuery();
     ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();

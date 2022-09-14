@@ -22,9 +22,9 @@
     
     while(result3.next()) {
         ArrayList<String> tmpData3 = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
-        tmpData3.add(result3.getString(3));   // 이름
-        tmpData3.add(result3.getString(6));   // 부서
-        tmpData3.add(result3.getString(7));   // 직급
+        tmpData3.add('"' + result3.getString(3) + '"');   // 이름
+        tmpData3.add('"' + result3.getString(6) + '"');   // 부서
+        tmpData3.add('"' + result3.getString(7) + '"');   // 직급
         data3.add(tmpData3);  //2차원 배열에 이 배열 추가 
     }  
     String team_Name = data3.get(0).get(0);
@@ -70,49 +70,27 @@
                 <div class="sub_menu">
                     <h2>부서</h2>
                     <ul class="big_menu">
-                        <li>개발팀 <i class="arrow fas fa-angle-right"></i></li>
-                        <%
-                            String departmentMenu = "개발팀"
-                        %>
-                        <ul class="small_menu">
-                            <%
-                            if(data3.size() != 0) {
-                            for(int i = 0; i < data3.size(); i++) {
-                            team_Name = data3.get(i).get(0);
-                            department_name = data3.get(i).get(1);
-                            position_name = data3.get(i).get(2);
-                            
-
+                        <li>개발팀 <i class="arrow fas fa-angle-right"></i></li>    
+                        <ul class="small_menu" id="team_development">
                             
                         <li>
                             <form action="user_main.jsp">
-                                <input type="submit" value="<%=position_name%> <%=team_Name%>" name="team_Name">
+                                <input type="submit" value="ㅋㅋㅋㅋ" name="team_Name">
                             </form>
                         </li>
-                        <li>
-                        </li>
-                        
-                        
-                        <%
-                            }}
-                            else {
-                        %>
-                                회원이 없습니다.
-                        <%
-                            }
-                        %>
-                        <li>
-                            
-                        </li>
                         </ul>
                     </ul>
+
                     <ul class="big_menu">
                         <li>인사팀 <i class="arrow fas fa-angle-right"></i></li>
-                        <ul class="small_menu">
+                        <ul class="small_menu" id="team_hr">
                         </ul>
                     </ul>
+
                     <ul class="big_menu">
                         <li>마케팅팀</li>
+                        <ul class="small_menu" id="team_marketing">
+                        </ul>
                     </ul>
                 </div>
             </div>
@@ -144,5 +122,75 @@
                     $('.left_sidebar-menu').fadeOut();
                 });
             });
+        </script>
+        <script>
+            var workerArray = '<%=data3%>'
+            var team_development = '개발팀'
+            var team_hr = '인사팀'
+            var team_marketing = '마케팅팀'
+
+            workerArray = JSON.parse(workerArray)
+
+            if(workerArray.length == 0) {
+                alert("팀원 없을 때 div")
+            }
+            else {
+                for(var index = 0; index < workerArray.length; index++) {
+                    if(workerArray[index][1] == team_development) { // 개발팀
+                        var workerLi = document.createElement('li')
+                        var workerForm = document.createElement('form')
+                        var workerSubmit = document.createElement('input')
+
+                        workerForm.action = "../main/user_main.jsp"
+
+                        workerSubmit.setAttribute("type", "submit")
+                        workerSubmit.setAttribute("name", "team_name")
+                        workerSubmit.setAttribute("value", workerArray[index][0]) 
+
+                        document.getElementById("team_development").appendChild(workerLi)
+                        workerLi.appendChild(workerForm)
+                        workerForm.appendChild(workerSubmit)
+
+                    }
+                    else if(workerArray[index][1] == team_hr) { // 인사팀
+                        var workerLi = document.createElement('li')
+                        var workerForm = document.createElement('form')
+                        var workerSubmit = document.createElement('input')
+
+                        workerForm.action = "../main/user_main.jsp"
+
+                        workerSubmit.setAttribute("type", "submit")
+                        workerSubmit.setAttribute("name", "team_name")
+                        workerSubmit.setAttribute("value", workerArray[index][0])
+
+                        document.getElementById("team_hr").appendChild(workerLi)
+                        workerLi.appendChild(workerForm)
+                        workerForm.appendChild(workerSubmit)
+
+                    }
+                    else if(workerArray[index][1] == team_marketing) { // 마케팅팀
+                        var workerLi = document.createElement('li')
+                        var workerForm = document.createElement('form')
+                        var workerSubmit = document.createElement('input')
+
+                        workerForm.action = "../main/user_main.jsp"
+
+                        workerSubmit.setAttribute("type", "submit")
+                        workerSubmit.setAttribute("name", "team_name")
+                        workerSubmit.setAttribute("value", workerArray[index][0])
+
+                        document.getElementById("team_marketing").appendChild(workerLi)
+                        workerLi.appendChild(workerForm)
+                        workerForm.appendChild(workerSubmit)
+
+                    }
+                    else {
+                        continue
+                    }
+                }
+            }
+
+            
+            console.log(workerArray)
         </script>
 </body>
