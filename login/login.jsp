@@ -25,7 +25,7 @@
 
     <div id="login_container">
         <div id="login_logo">login</div>
-        <form action="login_check.jsp" id="login_content">
+        <form action="login_check.jsp" id="login_content" onsubmit="return loginInputCheck()">
             <input name="userID" type="text" id="login_id_container" value="ID" onfocus="this.value=''">
             <input name="userPW" type="password" id="login_pw_container" placeholder="PassWord" onfocus="this.placeholder=''">
             <div id="login_check_container">
@@ -52,6 +52,20 @@
     <script>
         function moveJoin() {
             location.href="../join/join.jsp"
+        }
+
+        function loginInputCheck() {
+            var idCheck = document.getElementById("login_id_container").value
+            var pwCheck = document.getElementById("login_pw_container").value
+
+            if(idCheck.length == 0 || idCheck == "" || idCheck == "ID") {
+                alert("아이디를 입력해주세요")
+                return false
+            }
+            else if(pwCheck.length == 0 || pwCheck == "") {
+                alert("비밀번호를 입력해주세요")
+                return false
+            }
         }
     </script>
 </body>

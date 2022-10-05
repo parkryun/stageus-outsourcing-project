@@ -70,33 +70,33 @@ input[type=text] {
     }
     
     #find_id_content {
-        width: 350px;
+        width: 95%;
         height: 350px;
     }
 
-    input[type=text] {
+    #userName, #userPhoneNum {
         border: 1px solid #e5e5e5;
         color: #353535;
         font-size: 12px;
-        width: 200px;
+        width: 60%;
         height: 30px;
     }
-    
+
     #find_box {
-        margin-top: 30px;
+        width: 100%;
     }
     
     .find_id_input {
-        width: 350px;
+        width: 90%;
     }
     
     #find_id_button {
-        justify-content: center;
-        width: 300px;
+        width: 100%;
         font-size: 15px;
     }
     
     #button_container {
-        text-align: center;
+        margin: auto;
+        width: 90%;
     }
 }

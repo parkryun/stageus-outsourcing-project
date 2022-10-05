@@ -1,6 +1,20 @@
+tr {
+    display: flex;
+    justify-content: space-between;
+    height: 30px;
+}
+
+td {
+    display: block;
+    margin: auto 0 auto 0;
+}
+
 body {
-    min-width: 500px;
     background: #f0f2f5;
+}
+
+form {
+    margin: 0;
 }
 
 textarea:focus {
@@ -59,6 +73,14 @@ textarea:focus {
     height: 50px;
 }
 
+#calendar_time {
+    border: none;
+    color: #2a2c2d;
+    font-size: 14px;
+    font-family: helvetica;
+    width: 180px
+}
+
 #calendar_date {
     border: none;
     height: 30px;
@@ -79,7 +101,7 @@ textarea:focus {
     display: flex;
     justify-content: space-around;
     margin: 0 auto;
-    width: 800px;
+    width: 500px;
     height: fit-content;
 }
 
@@ -95,6 +117,7 @@ textarea:focus {
     flex-direction: column;
     align-items: center;
     padding-top: 15px;
+    margin: auto;
     background-color: white;
     border: none;
     border-radius: 12px;
@@ -106,6 +129,7 @@ textarea:focus {
 .schedule_content {
     font-size: 15px;
     font-weight: 400;
+    width: 80%;
 }
 
 #schedule_remove_update {
@@ -117,9 +141,9 @@ textarea:focus {
 }
 
 #schedule_remove_button {
+    float: right;
     background-color: #e05162;
-    width: 70px;
-    height: 32px;
+    height: 28px;
     border: none;
     border-radius: 5px;
     color: #fff;
@@ -128,8 +152,8 @@ textarea:focus {
 }
 
 #schedule_update_button {
-    width: 70px;
-    height: 32px;
+    float: right;
+    height: 28px;
     background-color: #42b72a;
     border: none;
     border-radius: 5px;
@@ -142,25 +166,85 @@ textarea:focus {
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
+    margin-top: 10px;
     width: 500px;
 }
 
 #prev_month_submit {
-    background-image: url();
+    background-image: url(../main/arrow_back.png);
+    background-size: contain;
+    font-size: 0px;
+    width: 30px;
+    height: 30px;
 }
 
 #next_month_submit {
-
+    background-image: url(../main/arrow_forward.png);
+    background-size: contain;
+    font-size: 0px;
+    width: 30px;
+    height: 25px;
 }
 
+.schedule_update_remove_finish_btn {
+    height: 28px;
+    background-color: #1877f2;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
 
+.schedule_update_submit {
+    height: 28px;
+    background-color: #42b72a;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.calendar_td_remove_button {
+    float: right;
+    width: 40px;
+    height: 28px;
+    background-color: #42b72a;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.calendarForm {
+    display: flex;
+    justify-content: space-between;
+}
+
+.calendar_day_li {
+    font-size: 20px;
+}
+
+.calendar_day_li {
+    /* float: left; */
+}
 
 @media screen and (max-width: 400px) {
+    body {
+        width: 100%;
+    }
+
+    tr {
+        width: 100%;
+    }
+
     #diary_container {
         display: flex;
         flex-direction: column;
         margin-left: 0px;
-        width: 360px;
+        width: 95%;
 
     }
 
@@ -173,12 +257,12 @@ textarea:focus {
         margin-bottom: 60px;
         padding-top: 15px;
         font-size: 18px;
-        width: 350px;
+        width: 100%;
     }
 
     #diary_content {
         margin-top: 15px;
-        width: 340px;
+        width: 95%;
         height: 70px;
     }
 
@@ -190,7 +274,7 @@ textarea:focus {
 
     #diary_write_button {
         margin: 15px 0 20px 0;
-        width: 340px;
+        width: 90%;
         height: 35px;
     }
 
@@ -202,19 +286,24 @@ textarea:focus {
         margin-top: 30px;
     }
 
+    #schedule_month {
+        width: 100%;
+    }
+
     #schedule_container {
         margin-bottom: 60px;
         padding-top: 15px;
         font-size: 20px;
-        width: 500px;
+        width: 100%;
     }
 
     .schedule_content {
+        width: 80%;
         font-size: 15px;
     }
 
     #schedule_remove_update {
-        width: 350px;    
+        width: 90%;    
     }
     
     #schedule_remove_button {
@@ -232,7 +321,7 @@ textarea:focus {
     #prev_next_month_container {
         display: flex;
         justify-content: space-between;
-        width: 350px;
+        width: 90%;
 
     }
 }

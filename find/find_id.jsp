@@ -25,15 +25,15 @@
 
     <div id="find_id_container">
         <div id="find_id_logo">find ID</div>
-        <form action="find_id_check.jsp" id="find_id_content">
+        <form action="find_id_check.jsp" id="find_id_content" onsubmit="return findIDInputCheck()">
             <div id="find_box">
                 <div class="find_id_input">
                     <div>name   </div>
-                    <input type="text" name="userName">
+                    <input type="text" name="userName" id="userName">
                 </div>
                 <div class="find_id_input">
                     <div>phone  </div>
-                    <input type="text" name="userPhoneNum">
+                    <input type="text" name="userPhoneNum" id="userPhoneNum">
                 </div>
                 <div id="button_container">
                     <input type="submit" value="찾기" id="find_id_button">
@@ -42,4 +42,19 @@
         </form>
     </div>
 
+    <script>
+        function findIDInputCheck() {
+            var checkName = document.getElementById("userName").value
+            var userPhoneNum = document.getElementById("userPhoneNum").value
+
+            if(checkName.length == 0 || checkName == "") {
+                alert("이름을 입력해주세요")
+                return false
+            }
+            else if(userPhoneNum.length == 0 || userPhoneNum == "") {
+                alert("전화번호를 입력해주세요")
+                return false
+            }
+        }
+    </script>
 </body>

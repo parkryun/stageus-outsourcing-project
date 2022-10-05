@@ -92,19 +92,23 @@ body {
     }
     
     #login_content {
-        width: 350px;
+        width: 95%;
     }
     
     #login_id_container {
-        width: 320px;
+        width: 90%;
     }
     
     #login_pw_container {
-        width: 320px;
+        width: 90%;
     }
     
+    #login_check_container {
+        width: 90%;
+    }
+
     #login_button {
-        width: 320px;
+        width: 100%;
     }
     
     #find_container {
@@ -112,13 +116,21 @@ body {
     }
     
     #join_button_container {
+        width: 50%;
         margin-top: 18px;
     }
     
     #join_button {
-        width: 128px;  
+        width: 100%;  
         height: 40px;
         font-size: 15px;
     }
 
+    #content_link_container {
+        justify-content: center;
+    }
+
+    #user_link_container {
+        margin-left: auto;
+    }
 }

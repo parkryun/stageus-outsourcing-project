@@ -44,21 +44,24 @@
 
 //=================================================쿼리2 캘린더
 
-    String sql2 = "SELECT calendarContent, DAY(calendarDate), calendarDate FROM calendar WHERE userID=? AND MONTH(calendarDate)=? ORDER BY DAY(calendarDate) ASC"; // 조건으로 해당 날짜 나중에 팀 할때도 조건으로 올때도 월을 넘겨줘야지 다음달 할때도 폼에다가 10 벨류값 넣어서 보내줘서 가져오는거
-    PreparedStatement query2 = connect.prepareStatement(sql2);
-    query2.setString(1, userID);
-    query2.setString(2, calendarDate_month);
+String sql2 = "SELECT calendarContent, DAY(calendarDate), calendarDate, calendarNum, HOUR(calendarDate), MINUTE(calendarDate) FROM calendar WHERE userID=? AND MONTH(calendarDate)=? ORDER BY DAY(calendarDate) ASC"; // 조건으로 해당 날짜 나중에 팀 할때도 조건으로 올때도 월을 넘겨줘야지 다음달 할때도 폼에다가 10 벨류값 넣어서 보내줘서 가져오는거
+PreparedStatement query2 = connect.prepareStatement(sql2);
+query2.setString(1, userID);
+query2.setString(2, calendarDate_month);
 
-    ResultSet result2 = query2.executeQuery();
-    ArrayList<ArrayList<String>> data2 = new ArrayList<ArrayList<String>>(); // var변수는 data2로 해서 배열 가져옴
-    
-    while(result2.next()) {
-        ArrayList<String> tmpData2 = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
-        tmpData2.add('"' + result2.getString(1) + '"'); // 일정 내용  
-        tmpData2.add(result2.getString(2)); // 일정 일
-        tmpData2.add('"' + result2.getString(3) + '"'); // 일정 날짜
-        data2.add(tmpData2);  //2차원 배열에 이 배열 추가 
-    }      
+ResultSet result2 = query2.executeQuery();
+ArrayList<ArrayList<String>> data2 = new ArrayList<ArrayList<String>>(); // var변수는 data2로 해서 배열 가져옴
+
+while(result2.next()) {
+    ArrayList<String> tmpData2 = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
+    tmpData2.add('"' + result2.getString(1) + '"'); // 일정 내용  
+    tmpData2.add(result2.getString(2)); // 일정 일
+    tmpData2.add('"' + result2.getString(3) + '"'); // 일정 날짜
+    tmpData2.add(result2.getString(4)); // 일정 번호
+    tmpData2.add(result2.getString(5)); // 일정 시
+    tmpData2.add(result2.getString(6)); // 일정 분
+    data2.add(tmpData2);  //2차원 배열에 이 배열 추가 
+}     
 
 //=================================================쿼리3 팀원
 
@@ -134,14 +137,10 @@
                 </div>
             </div>
         </div>
-        input text에다가 벨류 넣고 히든으로 숨겨버려?
         <form action="prev_next_month.jsp" id="prev_next_month_container">
-            <div  value="<%=month - 1%>"></div>
-            <input type="submit" name="calendarDate_month" value="<%=month - 1%>">
+            <input type="submit" name="calendarDate_month" value="<%=month - 1%>" id="prev_month_submit">
         
-            <a href="prev_next_month.jsp" class="material-icons" name="calendarDate_month" >
-                arrow_back
-            </a>
+            <input type="submit" name="calendarDate_month" value="<%=month + 1%>" id="next_month_submit">
         </form>
     </div>
     
@@ -169,7 +168,7 @@
             var calendarTd = document.createElement('td')
             document.getElementById('schedule_content_box').appendChild(calendarTr)
             calendarTr.appendChild(calendarTd)
-            calendarTd.innerHTML = calendarArray[0][1] + "일 " + "<br>" + calendarArray[0][0]
+            calendarTd.innerHTML = calendarArray[0][1] + "일 " + "<br>" + calendarArray[0][4] + "시 " + calendarArray[0][5] + "분           " + calendarArray[0][0]
             calendar_erase(0)
 
             for(var index = 1; index < calendarArray.length; index++) {
@@ -178,7 +177,7 @@
                     var calendarTd = document.createElement('td')
                     document.getElementById('schedule_content_box').appendChild(calendarTr)
                     calendarTr.appendChild(calendarTd)
-                    calendarTd.innerHTML = calendarArray[index][1] + "일 " + "<br>" + calendarArray[index][0]
+                    calendarTd.innerHTML = calendarArray[index][1] + "일 " + "<br>" + calendarArray[index][4] + "시 " + calendarArray[index][5] + "분           " + calendarArray[index][0]
                     calendar_erase(index)
                 }
                 else { // 같은 날일 때 td만 만들기
@@ -186,7 +185,7 @@
                     var calendarTd = document.createElement('td')
                     document.getElementById('schedule_content_box').appendChild(calendarTr)
                     calendarTr.appendChild(calendarTd)
-                    calendarTd.innerHTML = calendarArray[index][0]
+                    calendarTd.innerHTML = calendarArray[index][4] + "시 " + calendarArray[index][5] + "분           " + calendarArray[index][0]
 
                     if(today > Date.parse(calendarArray[index][2])) {
                         calendarTd.innerHTML = "<del>" + calendarArray[index][0] + "</del>"

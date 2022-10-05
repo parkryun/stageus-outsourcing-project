@@ -108,12 +108,10 @@
             </div>
         </div>
         <form action="prev_next_month.jsp" id="prev_next_month_container">
-            <div  value="<%=month - 1%>"></div>
-            <input type="submit" name="calendarDate_month" value="<%=month - 1%>">
+            
+            <input type="submit" name="calendarDate_month" value="<%=month - 1%>" id="prev_month_submit">
         
-            <a href="prev_next_month.jsp" class="material-icons" name="calendarDate_month" >
-                arrow_forward
-            </a>
+            <input type="submit" name="calendarDate_month" value="<%=month + 1%>" id="next_month_submit">
         </form>
     </div>
     <script>

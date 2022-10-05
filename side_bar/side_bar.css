@@ -51,16 +51,6 @@
         }
 
         /* 사이드 메뉴 */
-        input[type="search"] {
-            width: 180px;
-            margin: 0 auto;
-            margin-left: 9px;
-            border: 2px solid #797979;
-            font-size: 14px;
-            margin-top: 10px;
-            padding: 4px 0 4px 14px;
-            border-radius: 50px;
-        }
 
         .left_sub_menu {
             position: fixed;

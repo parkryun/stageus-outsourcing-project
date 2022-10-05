@@ -43,15 +43,15 @@
 
     <div id="find_pw_container">
         <div id="find_pw_logo">update PW</div>
-        <form action="update_pw_check.jsp" id="find_pw_content">
+        <form action="update_pw_check.jsp" id="find_pw_content" onsubmit="return updatePWInputCheck()">
             <div id="find_box">
                 <div class="find_pw_input">
                     <div>PW   </div>
-                    <input type="password" name="userPW">
+                    <input type="password" id="userPW" name="userPW">
                 </div>
                 <div class="find_pw_input">
                     <div>PW check  </div>
-                    <input type="password" name="userPW_check">
+                    <input type="password" id="userPW_check" name="userPW_check">
                 </div>
                 <div>
                     <input type="submit" value="찾기" id="find_pw_button" >
@@ -60,6 +60,18 @@
         </form>
     </div>
     <script>
-        
+        function updatePWInputCheck() {
+            var userPW = document.getElementById("userPW").value
+            var userPW_check = document.getElementById("userPW_check").value
+
+            if(userPW.length == 0 || userPW == "") {
+                alert("수정할 비밀번호를 입력해주세요")
+                return false
+            }
+            else if(userPW_check.length == 0 || userPW_check == "") {
+                alert("수정할 비밀번호를 재확인해주세요")
+                return false
+            }
+        }
     </script>
 </body>

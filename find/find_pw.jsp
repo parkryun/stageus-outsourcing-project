@@ -25,15 +25,15 @@
 
     <div id="find_pw_container">
         <div id="find_pw_logo">find PW</div>
-        <form action="find_pw_check.jsp" id="find_pw_content">
+        <form action="find_pw_check.jsp" id="find_pw_content" onsubmit="return findPWInputCheck()">
             <div id="find_box">
                 <div class="find_pw_input">
                     <div>id   </div>
-                    <input type="text" name="userID">
+                    <input type="text" id="userID" name="userID">
                 </div>
                 <div class="find_pw_input">
                     <div>name  </div>
-                    <input type="text" name="userName">
+                    <input type="text" id="userName" name="userName">
                 </div>
                 <div id="button_container">
                     <input type="submit" value="찾기" id="find_pw_button">
@@ -43,6 +43,18 @@
     </div>
      
     <script>
-        
+        function findPWInputCheck() {
+            var checkID = document.getElementById("userID").value
+            var checkName = document.getElementById("userName").value
+
+            if(checkID.length == 0 || checkID == "") {
+                alert("아이디를 입력해주세요")
+                return false
+            }
+            else if(checkName.length == 0 || checkName == "") {
+                alert("이름을 입력해주세요")
+                return false
+            }
+        }
     </script>
 </body>

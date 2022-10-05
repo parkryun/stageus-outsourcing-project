@@ -63,6 +63,14 @@ input[type=text] {
     body {
         min-width: 0;
     }
+
+    input[type=text] {
+        border: 1px solid #e5e5e5;
+        color: #353535;
+        font-size: 12px;
+        width: 60%;
+        height: 30px;
+    }
     
     #find_pw_logo {
         font-size: 30px;
@@ -70,24 +78,26 @@ input[type=text] {
     }
     
     #find_pw_content {
-        width: 350px;
+        width: 90%;
         height: 350px;
     }
     
     #find_box {
+        width: 90%;
         margin-top: 30px;
     }
     
     .find_pw_input {
-        width: 350px;
+        width: 90%;
     }
     
     #find_pw_button {
-        width: 300px;
+        width: 100%;
         font-size: 15px;
     }
 
     #button_container {
-        text-align: center;
+        width: 90%;
+        margin: auto;
     }
 }

@@ -89,11 +89,6 @@
                         <li>개발팀 <i class="arrow fas fa-angle-right"></i></li>    
                         <ul class="small_menu" id="team_development">
                             
-                        <li>
-                            <form action="user_main.jsp">
-                                <input type="submit" value="ㅋㅋㅋㅋ" name="team_Name">
-                            </form>
-                        </li>
                         </ul>
                     </ul>
 
@@ -112,7 +107,7 @@
             </div>
             <div class="overlay"></div>
         </div>
-
+    </div>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script type="text/javascript">
             $(function () {
@@ -178,8 +173,6 @@
                 submitDisabledMarketing()
             }
 
-            
-            
 
 function workerList() {
         if(workerArray.length == 0) {
@@ -245,21 +238,21 @@ function workerList() {
 function submitDisabledDevelopment() {
     var target = document.getElementsByClassName("team_development_submit")
     for(var index = 0; index < target.length; index++) {
-        target[index].disabled = true
+        target[index].disabled = true // 버튼 비활성
     }
 }
 
 function submitDisabledHr() {
     var target = document.getElementsByClassName("team_hr_submit")
     for(var index = 0; index < target.length; index++) {
-        target[index].disabled = true
+        target[index].disabled = true // 버튼 비활성
     }
 }
 
 function submitDisabledMarketing() {
     var target = document.getElementsByClassName("team_marketing_submit")
     for(var index = 0; index < target.length; index++) {
-        target[index].disabled = true
+        target[index].disabled = true // 버튼 비활성
     }
 }
             

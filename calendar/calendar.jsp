@@ -11,7 +11,13 @@
 
     String calendarContent = request.getParameter("calendarContent");
     String calendarDate = request.getParameter("calendarDate");
+    String calendarTime = request.getParameter("calendarTime");
+    String calendarSecond = ":00";
 
+    calendarTime = calendarTime.concat(calendarSecond);
+    calendarDate = calendarDate + " ";
+    String calendarDatetime = calendarDate.concat(calendarTime);
+    
     Class.forName("com.mysql.jdbc.Driver");
     Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/outsourcing", "cono", "1234");
 
@@ -19,7 +25,7 @@
     PreparedStatement query = connect.prepareStatement(sql);
     
     query.setString(1, calendarContent);
-    query.setString(2, calendarDate);
+    query.setString(2, calendarDatetime);
     query.setString(3, userID);
 
 

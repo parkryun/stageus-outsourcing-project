@@ -22,8 +22,19 @@
     Class.forName("com.mysql.jdbc.Driver"); 
     Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/outsourcing", "cono", "1234");
 
-    // 빈칸 예외처리
-    if(!userID.equals("") && !userPW.equals("") && !userName.equals("") && !userPhoneNum.equals("") && !userEmail.equals("")) {
+    if(position == "사장") {
+        String sql2 = "INSERT INTO users (userID, userPW, userName, userEmail, department, userPhoneNum, position) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement query2 = connect.prepareStatement(sql2);
+        query2.setString(1, userID);
+        query2.setString(2, userPW);
+        query2.setString(3, userName);
+        query2.setString(4, userEmail);
+        query2.setString(6, userPhoneNum);
+        query2.setString(7, position);
+    
+        query2.executeUpdate();
+    }
+    else {
         String sql2 = "INSERT INTO users (userID, userPW, userName, userEmail, department, userPhoneNum, position) VALUES(?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement query2 = connect.prepareStatement(sql2);
         query2.setString(1, userID);
@@ -33,11 +44,9 @@
         query2.setString(5, department);
         query2.setString(6, userPhoneNum);
         query2.setString(7, position);
-
+    
         query2.executeUpdate();
-    
     }
-    
 %>
 
 <!-- 여기 사이는 jsp로 인식됨 -->
@@ -52,14 +61,8 @@
 <body>
 
     <script>
-        if("<%=userID%>" != "" && "<%=userPW%>" != "" && "<%=userName%>" != "" && "<%=userPhoneNum%>" != "" && "<%=userEmail%>" != "") {
-            alert("회원가입 완료!")
-            location.href="../login/login.jsp"
-        }
-        else {
-            alert('필수사항을 입력하세요')
-            location.href="../join/join.jsp"
-        }
+        alert("회원가입 완료!")
+        location.href="../login/login.jsp"
     </script>
     
 </body>

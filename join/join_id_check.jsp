@@ -52,7 +52,10 @@
                 location.href="join_id_check_form.jsp"
             }
             else {
+                opener.document.getElementById("userID").value = "<%=userID%>"
+                opener.document.getElementById("id_uncheck").value = "id_check"
                 alert("사용 가능한 아이디입니다.")
+
                 window.close()
             }
         </script>
