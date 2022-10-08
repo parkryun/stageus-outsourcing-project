@@ -22,7 +22,7 @@
     Class.forName("com.mysql.jdbc.Driver"); 
     Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/outsourcing", "cono", "1234");
 
-    if(position == "사장") {
+    if(position == "사장") { // 부서를 넣지 않음
         String sql2 = "INSERT INTO users (userID, userPW, userName, userEmail, department, userPhoneNum, position) VALUES(?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement query2 = connect.prepareStatement(sql2);
         query2.setString(1, userID);
@@ -48,8 +48,6 @@
         query2.executeUpdate();
     }
 %>
-
-<!-- 여기 사이는 jsp로 인식됨 -->
 
 <head>
     <meta charset="UTF-8">

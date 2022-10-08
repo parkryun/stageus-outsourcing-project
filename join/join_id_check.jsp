@@ -54,6 +54,8 @@
             else {
                 opener.document.getElementById("userID").value = "<%=userID%>"
                 opener.document.getElementById("id_uncheck").value = "id_check"
+                opener.document.getElementById("userID").readOnly = true 
+                //disabled는 form 전송안되는데 readonly는 전송돼용
                 alert("사용 가능한 아이디입니다.")
 
                 window.close()

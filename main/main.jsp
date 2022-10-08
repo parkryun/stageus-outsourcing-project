@@ -111,7 +111,7 @@
     <jsp:include page="<%=sidebarPage%>" flush="false"/>
 
     <div id="diary_container">
-        <h1 id="diary_logo"><%=data.get(0).get(0)%>의 diary</h1>
+        <h1 id="diary_logo"><%=userName%>의 diary</h1>
         <main>
             <section>
                 <form action="../calendar/calendar.jsp" id="diary_write_container">

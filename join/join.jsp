@@ -13,7 +13,7 @@
     Class.forName("com.mysql.jdbc.Driver"); // 우리가 설치한 connecter 파일 가져오는 줄
     Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/outsourcing", "cono", "1234");
 
-    String sql = "SELECT department, position FROM users";
+    String sql = "SELECT department, position FROM users WHERE position='팀장' OR position='사장'";
     PreparedStatement query = connect.prepareStatement(sql);
 
     ResultSet result = query.executeQuery();
@@ -49,82 +49,89 @@
     %>
     <jsp:include page="<%=headerPage%>" flush="false"/>
 
-    <div id="join_container">
-        <div id="join_logo">join</div>
-        <form action="join_check.jsp" id="join_content" onsubmit="return JoinInputCheck()">
-            <table>
-                <tr>
-                    <th>
-                        아이디
-                        <img src="../red_star_img.png">
-                    </th> 
-                    <td>
-                        <input type="text" name="userID" id="userID">
-                        <input type="button" onclick="idCheck()" name="id_check" value="중복체크">
-                        <input type="hidden" id="id_uncheck" name="id_duplication" value="id_uncheck">
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        비밀번호
-                        <img src="../red_star_img.png">
-                    </th>
-                    <td><input type="password" id="userPW" name="userPW"></td>
-                </tr>
-                <tr>
-                    <th>
-                        이름
-                        <img src="../red_star_img.png">
-                    </th>
-                    <td><input type="text" id="userName" name="userName"></td>
-                </tr>
-                <tr>
-                    <th>
-                        전화번호
-                        <img src="../red_star_img.png">
-                    </th>
-                    <td><input type="text" id="userPhoneNum" name="userPhoneNum"></td>
-                </tr>
-                <tr>
-                    <th>
-                        이메일
-                        <img src="../red_star_img.png">
-                    </th>
-                    <td><input type="text" id="userEmail" name="userEmail"></td>
-                </tr>
-                <tr>
-                    <th>
-                        부서
-                    </th>
-                    <td>
-                        <select name="department" id="department">
-                            <option value="개발팀">개발팀</option>
-                            <option value="인사팀">인사팀</option>
-                            <option value="마케팅팀">마케팅팀</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        직급
-                    </th>
-                    <td>
-                        <select name="position" id="position">
-                            <option value="사장">사장</option>
-                            <option value="팀장">팀장</option>
-                            <option value="대리">대리</option>
-                            <option value="사원">사원</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-
-            <div id="join_submit_container">
+    <main id="join_container">
+        <h1 id="join_logo">join</h1>
+            <section>
+                <form action="join_check.jsp" id="join_content" onsubmit="return JoinInputCheck()">
+                    <table>
+                        <tr>
+                            <th>
+                                아이디
+                                <img src="../red_star_img.png">
+                            </th> 
+                            <td>
+                                <input type="text" name="userID" id="userID">
+                                <input type="button" onclick="idCheck()" name="id_check" value="중복체크">
+                                <input type="hidden" id="id_uncheck" name="id_duplication" value="id_uncheck">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                비밀번호
+                                <img src="../red_star_img.png">
+                            </th>
+                            <td><input type="password" id="userPW" name="userPW"></td>
+                        </tr>
+                        <tr>
+                            <th>
+                                비밀번호 확인
+                                <img src="../red_star_img.png">
+                            </th>
+                            <td><input type="password" id="userPWCheck" name="userPWCheck"></td>
+                        </tr>
+                        <tr>
+                            <th>
+                                이름
+                                <img src="../red_star_img.png">
+                            </th>
+                            <td><input type="text" id="userName" name="userName"></td>
+                        </tr>
+                        <tr>
+                            <th>
+                                전화번호
+                                <img src="../red_star_img.png">
+                            </th>
+                            <td><input type="text" id="userPhoneNum" name="userPhoneNum"></td>
+                        </tr>
+                        <tr>
+                            <th>
+                                이메일
+                                <img src="../red_star_img.png">
+                            </th>
+                            <td><input type="text" id="userEmail" name="userEmail"></td>
+                        </tr>
+                        <tr>
+                            <th>
+                                부서
+                            </th>
+                            <td>
+                                <select name="department" id="department">
+                                    <option value="개발팀">개발팀</option>
+                                    <option value="인사팀">인사팀</option>
+                                    <option value="마케팅팀">마케팅팀</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                직급
+                            </th>
+                            <td>
+                                <select name="position" id="position">
+                                    <option value="사장">사장</option>
+                                    <option value="팀장">팀장</option>
+                                    <option value="대리">대리</option>
+                                    <option value="사원">사원</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+            </section>
+            <section id="join_submit_container">
                 <input type="submit" value="회원가입" id="join_button"> 
-            </div>
+            </section>
         </form>
-
-    </div>
+    </main>
     <script>
         var positionArray = '<%=data%>'
         positionArray = JSON.parse(positionArray)
@@ -164,6 +171,7 @@
         function JoinInputCheck() {
             var checkID = document.getElementById("userID").value
             var checkPW = document.getElementById("userPW").value
+            var PWReCheck = document.getElementById("userPWCheck").value
             var checkName = document.getElementById("userName").value
             var checkPhoneNum = document.getElementById("userPhoneNum").value
             var checkEmail = document.getElementById("userEmail").value
@@ -192,6 +200,10 @@
             }
             else if(document.getElementById("id_uncheck").value == "id_uncheck") {
                 alert("아이디 중복체크를 해주세요")
+                return false
+            }
+            else if(checkPW != PWReCheck) {
+                alert("비밀번호가 일치하지않습니다.")
                 return false
             }
 
