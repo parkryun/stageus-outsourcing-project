@@ -92,6 +92,7 @@ textarea:focus {
     border-radius: 8px; 
     background-color: #1877f2;
     color: #fff;
+    text-align: center;
     width: 450px;
     height: 35px;
     cursor: pointer;
@@ -137,6 +138,7 @@ textarea:focus {
     flex-direction: row;
     width: 500px;
     justify-content: left;
+    margin: 0 0 20px 15px;
     
 }
 

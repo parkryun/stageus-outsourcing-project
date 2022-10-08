@@ -16,17 +16,20 @@
     int day = c.get(Calendar.DATE);
     String calendarDate_month = Integer.toString(month);
 
-    // =================================================받아오는 값에 대한 인코딩 지정
+    
     request.setCharacterEncoding("utf-8");
 
 
     String userID = (String)session.getAttribute("userID");
+    String userName = (String)session.getAttribute("userName");
+    String position = (String)session.getAttribute("position");
 
     
     Class.forName("com.mysql.jdbc.Driver"); // 우리가 설치한 connecter 파일 가져오는 줄
     Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/outsourcing", "cono", "1234");
 
-    String sql = "SELECT * FROM users WHERE userID=?";
+    // =================================================쿼리1 사용자 이름
+    String sql = "SELECT userName FROM users WHERE userID=?";
     PreparedStatement query = connect.prepareStatement(sql);
     query.setString(1, userID);
 
@@ -35,11 +38,11 @@
         
     while(result.next()) {
         ArrayList<String> tmpData = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
-        tmpData.add(result.getString(3));   
+        tmpData.add(result.getString(1));   
         data.add(tmpData);  //2차원 배열에 이 배열 추가 
     }
 
-//=================================================쿼리2 캘린더
+    //=================================================쿼리2 캘린더
 
     String sql2 = "SELECT calendarContent, DAY(calendarDate), calendarDate, calendarNum, HOUR(calendarDate), MINUTE(calendarDate) FROM calendar WHERE userID=? AND MONTH(calendarDate)=? ORDER BY DAY(calendarDate) ASC"; // 조건으로 해당 날짜 나중에 팀 할때도 조건으로 올때도 월을 넘겨줘야지 다음달 할때도 폼에다가 10 벨류값 넣어서 보내줘서 가져오는거
     PreparedStatement query2 = connect.prepareStatement(sql2);
@@ -74,9 +77,11 @@
         tmpData3.add(result3.getString(3));  
         data3.add(tmpData3);  //2차원 배열에 이 배열 추가 
     }  
-    String team_Name = data3.get(0).get(0);
 
-    
+
+    String team_Name = data3.get(0).get(0);
+    String today = year + "-" + month + '-' + day; // 지나간 날짜 지우기 위해 오늘 날짜 구함
+
 %>  
 <head>
     <meta charset="UTF-8">
@@ -106,46 +111,50 @@
     <jsp:include page="<%=sidebarPage%>" flush="false"/>
 
     <div id="diary_container">
-        <div id="diary_logo"><%=data.get(0).get(0)%>의 diary</div>
-        <form action="../calendar/calendar.jsp" id="diary_write_container">
-            <div>일정 작성하기</div>
-            <div id="diary_content">
-                <textarea name="calendarContent" id="diary_content_text" onfocus="this.value=''">일정을 작성해주세요</textarea>
-            </div>
-            <div id="diary_date_and_time">
-                <div id="diary_date">
-                    <input type="date" name="calendarDate" id="calendar_date">
-                </div>
-                <div id="diary_time">
-                    <input type="time" name="calendarTime" id="calendar_time">
-                </div>
-            </div>
-            <input type="submit" value="작성" id="diary_write_button" onclick="contentCheck()">
-        </form>
-
-        <div id="schedule_month">
-            <form id="schedule_container" action="../calendar/calendar_remove.jsp">
-                <div><%=month %>월 일정</div>
-                <div class="schedule_content" id="schedule_content_box">
-                    
-                </div>
-                
-                <div id="schedule_remove_update">
-                    <div id="schedule_update">
-                        <input type="button" value="일정 수정" class="schedule_update_btn" id="schedule_update_button" onclick="calendarUpdateFunction()">
+        <h1 id="diary_logo"><%=data.get(0).get(0)%>의 diary</h1>
+        <main>
+            <section>
+                <form action="../calendar/calendar.jsp" id="diary_write_container">
+                    <h2>일정 작성하기</h2>
+                    <div id="diary_content">
+                        <textarea name="calendarContent" id="diary_content_text" onfocus="this.value=''">일정을 작성해주세요</textarea>
                     </div>
-                    <div id="schedule_remove">
-                        <input type="button" value="일정 삭제" class="schedule_remove_btn" id="schedule_remove_button" onclick="calendarRemoveFunction()">
+                    <div id="diary_date_and_time">
+                        <div id="diary_date">
+                            <input type="date" name="calendarDate" id="calendar_date">
+                        </div>
+                        <div id="diary_time">
+                            <input type="time" name="calendarTime" id="calendar_time">
+                        </div>
                     </div>
-                    <div>
-                        <input type="button" value="완료" class="schedule_update_remove_finish_btn" onclick="calendarUpdateRemoveFinishFunction()">
-                    </div>
-                    <div>
-                        <input type="submit" value="수정" class="schedule_update_submit">
-                    </div>
-                </div>
-            </form>
-        </div>
+                    <input type="submit" value="작성" id="diary_write_button" onclick="contentCheck()">
+                </form>
+            </section>
+    
+            <section id="schedule_month">
+                    <form id="schedule_container" action="../calendar/calendar_remove.jsp">
+                        <h2><%=month %>월 일정</h2>
+                        <p class="schedule_content" id="schedule_content_box">
+                            
+                        </p>
+                        
+                        <div id="schedule_remove_update">
+                            <div id="schedule_update">
+                                <input type="button" value="일정 수정" class="schedule_update_btn" id="schedule_update_button" onclick="calendarUpdateFunction()">
+                            </div>
+                            <div id="schedule_remove">
+                                <input type="button" value="일정 삭제" class="schedule_remove_btn" id="schedule_remove_button" onclick="calendarRemoveFunction()">
+                            </div>
+                            <div>
+                                <input type="button" value="완료" class="schedule_update_remove_finish_btn" onclick="calendarUpdateRemoveFinishFunction()">
+                            </div>
+                            <div>
+                                <input type="submit" value="수정" class="schedule_update_submit">
+                            </div>
+                        </div>
+                    </form>
+            </section>
+        </main>
         <form action="prev_next_month.jsp" id="prev_next_month_container">
             
             <input type="submit" name="calendarDate_month" value="<%=month - 1%>" id="prev_month_submit">
@@ -159,14 +168,14 @@
         $(".schedule_update_remove_finish_btn").hide();
         $(".schedule_update_submit").hide();
 
-        var today = '<%=year%>' + '-0' + '<%=month%>' + '-' + '<%=day%>'
+        var today = "<%=today%>"
         var calendarArray = '<%=data2%>'
 
-
+        // 가져온 값 정제
         today = Date.parse(today)
         calendarArray = JSON.parse(calendarArray)
 
-        console.log(calendarArray[0][2])
+        console.log(Date.parse(calendarArray[0][2]))
 
 
         if(calendarArray.length == 0) {
@@ -177,8 +186,7 @@
             calendarTd.innerHTML = "일정이 없습니다."
         }
         else {
-            //===========================li
-            
+            //===========================li     
             var calendarForm = document.createElement('form') // 각 일정마다 수정 삭제 form
             var calendarDayUl = document.createElement('ul') // 날짜 리스트
             var calendarDayLi = document.createElement('li')
@@ -276,7 +284,6 @@
                         return clickRemoveButton(calendarNumber)
                     }
                     
-
                     calendarDayLi.className = "calendar_day_li"
 
                     calendarDayUl.appendChild(calendarUl) // 일정 ul 넣기
@@ -293,8 +300,6 @@
                     calendarUpdateTextarea()
                     calendarUpdateRemove(index)
                     calendar_erase(index)
-
-                    
                 }
             }
         }

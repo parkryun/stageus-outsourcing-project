@@ -8,7 +8,6 @@
     <link rel="stylesheet" type="text/css" href="../header/header.css">
     <link rel="stylesheet" type="text/css" href="../font.css">
     
-    <link rel="stylesheet" type="text/css" href="../side_bar/side_bar.css">
     <link rel="stylesheet" type="text/css" href="../header/header.css">
     <link rel="stylesheet" type="text/css" href="assets/fontawesome-free/css/all.min.css">
 

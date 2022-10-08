@@ -29,7 +29,7 @@
         data.add(tmpData);  //2차원 배열에 이 배열 추가 
     }
 
-    //=================================================쿼리3 사용자
+    //=================================================쿼리3 사용자 사이드바 표시
     String sql3 = "SELECT * FROM users";
     PreparedStatement query3 = connect.prepareStatement(sql3);
 
@@ -43,6 +43,7 @@
         tmpData3.add('"' + result3.getString(7) + '"');   // 직급
         data3.add(tmpData3);  //2차원 배열에 이 배열 추가 
     }  
+    
     String team_Name = data3.get(0).get(0);
     String department_name = data3.get(0).get(1);
     String position_name = data3.get(0).get(2);
@@ -86,20 +87,20 @@
                 <div class="sub_menu">
                     <h2>부서</h2>
                     <ul class="big_menu">
-                        <li>개발팀 <i class="arrow fas fa-angle-right"></i></li>    
+                        <li class="team_menu">개발팀 <i class="arrow fas fa-angle-right"></i></li>    
                         <ul class="small_menu" id="team_development">
                             
                         </ul>
                     </ul>
 
                     <ul class="big_menu">
-                        <li>인사팀 <i class="arrow fas fa-angle-right"></i></li>
+                        <li class="team_menu">인사팀 <i class="arrow fas fa-angle-right"></i></li>
                         <ul class="small_menu" id="team_hr">
                         </ul>
                     </ul>
 
                     <ul class="big_menu">
-                        <li>마케팅팀</li>
+                        <li class="team_menu">마케팅팀</li>
                         <ul class="small_menu" id="team_marketing">
                         </ul>
                     </ul>
