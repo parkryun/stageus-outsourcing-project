@@ -44,7 +44,7 @@
     }
     // 아이디 존재
     else {
-        String sql2 = "SELECT userID, userPW, position, userName FROM users WHERE userID=?";
+        String sql2 = "SELECT userID, userPW, position, userName, department FROM users WHERE userID=?";
         PreparedStatement query2 = connect.prepareStatement(sql2);
         query2.setString(1, userID);
     
@@ -58,6 +58,7 @@
             tmpData2.add(result2.getString(2));   // 비밀번호
             tmpData2.add(result2.getString(3));   // 해당 직원 직급
             tmpData2.add(result2.getString(4));   // 해당 직원 이름
+            tmpData2.add(result2.getString(5));   // 부서
             data2.add(tmpData2);
         }
 
@@ -65,10 +66,12 @@
         if(userPW.equals(data2.get(0).get(1))) {
             String position = data2.get(0).get(2); 
             String userName = data2.get(0).get(3); 
+            String department = data2.get(0).get(4); 
             
             session.setAttribute("userID", userID); // 로그인하고 아이디 넘겨주고
             session.setAttribute("position", position); // 사이드바로 직급도 넘기기
             session.setAttribute("userName", userName); // 메인으로 이름도 넘기기
+            session.setAttribute("department", department); // 사이드바로 부서 넘기기
             response.sendRedirect("../main/main.jsp");
         }
         // 비밀번호 일치x
