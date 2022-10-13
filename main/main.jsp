@@ -62,26 +62,6 @@
         tmpData2.add(result2.getString(6)); // 일정 분
         data2.add(tmpData2);  //2차원 배열에 이 배열 추가 
     }      
-
-//=================================================쿼리3 팀원
-//if문으로 직급에 따라서 보는걸로
-
-    String sql3 = "SELECT * FROM users";
-    PreparedStatement query3 = connect.prepareStatement(sql3);
-
-    ResultSet result3 = query3.executeQuery();
-    ArrayList<ArrayList<String>> data3 = new ArrayList<ArrayList<String>>();
-    
-    while(result3.next()) {
-        ArrayList<String> tmpData3 = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
-        tmpData3.add(result3.getString(3));  
-        data3.add(tmpData3);  //2차원 배열에 이 배열 추가 
-    }  
-
-
-    String team_Name = data3.get(0).get(0);
-    String today = year + "-" + month + '-' + day; // 지나간 날짜 지우기 위해 오늘 날짜 구함
-
 %>  
 <head>
     <meta charset="UTF-8">
@@ -134,9 +114,7 @@
             <section id="schedule_month">
                     <form id="schedule_container" action="../calendar/calendar_remove.jsp">
                         <h2><%=month %>월 일정</h2>
-                        <p class="schedule_content" id="schedule_content_box">
-                            
-                        </p>
+                        <p class="schedule_content" id="schedule_content_box"></p>
                         
                         <div id="schedule_remove_update">
                             <div id="schedule_update">

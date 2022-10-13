@@ -126,9 +126,7 @@
                         </tr>
                     </table>
             </section>
-            <section id="join_submit_container">
-                <input type="submit" value="회원가입" id="join_button"> 
-            </section>
+            <input type="submit" value="회원가입" id="join_button"> 
         </form>
     </main>
     <script>

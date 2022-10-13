@@ -23,29 +23,37 @@
 
 
     <div id="login_container">
-        <div id="login_logo">login</div>
-        <form action="login_check.jsp" id="login_content" onsubmit="return loginInputCheck()">
-            <input name="userID" type="text" id="login_id_container" value="ID" onfocus="this.value=''">
-            <input name="userPW" type="password" id="login_pw_container" placeholder="PassWord" onfocus="this.placeholder=''">
-            <div id="login_check_container">
-                <input type="submit" id="login_button" value="로그인">
-            </div>
-
-            <div>
-                <div id="find_container">
-                    <div>
-                        <a href="../find/find_id.jsp" class="find_link">아이디 찾기</a>
+        <h1 id="login_logo">login</h1>
+        <main>
+            <form action="login_check.jsp" id="login_content" onsubmit="return loginInputCheck()">
+                <section id="login_section">
+                    <input name="userID" type="text" id="login_id_container" value="ID" onfocus="this.value=''">
+                    <input name="userPW" type="password" id="login_pw_container" placeholder="PassWord" onfocus="this.placeholder=''">
+                    <div id="login_check_container">
+                        <input type="submit" id="login_button" value="로그인">
                     </div>
+                </section>
+    
+                <section>
                     <div>
-                        <a href="../find/find_pw.jsp" class="find_link">비밀번호 찾기</a>
+                        <div id="find_container">
+                            <div>
+                                <a href="../find/find_id.jsp" class="find_link">아이디 찾기</a>
+                            </div>
+                            <div>
+                                <a href="../find/find_pw.jsp" class="find_link">비밀번호 찾기</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <div id="join_button_container">
-                <input type="button" id="join_button" value="새 아이디 만들기" onclick="moveJoin()">
-            </div>
-        </form>
+                </section>
+    
+                <section>
+                    <div id="join_button_container">
+                        <input type="button" id="join_button" value="새 아이디 만들기" onclick="moveJoin()">
+                    </div>
+                </section>
+            </form>
+        </main>
     </div>
 
     <script>

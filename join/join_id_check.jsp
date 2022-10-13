@@ -36,22 +36,22 @@
     <title>123</title>
 </head>
 <body>
-        <script>
-            var userIDArray = '<%=data%>'
-            var checkID = 'ㅁㅁㅁ'
-            userIDArray = JSON.parse(userIDArray)
+    <script>
+        var userIDArray = '<%=data%>'
+        var checkID = 'ㅁㅁㅁ'
+        userIDArray = JSON.parse(userIDArray)
 
-            for(var index = 0; index < userIDArray.length; index++) {
-                if("<%=userID%>" == userIDArray[index][0]) {
+        for(var index = 0; index < userIDArray.length; index++) {
+            if("<%=userID%>" == userIDArray[index][0]) {
                     checkID = userIDArray[index][0]
-                }
             }
+        }
 
-            if(checkID == "<%=userID%>") {
+        if(checkID == "<%=userID%>") {
                 alert("이미 존재하는 아이디입니다.")
                 location.href="join_id_check_form.jsp"
             }
-            else {
+        else {
                 opener.document.getElementById("userID").value = "<%=userID%>"
                 opener.document.getElementById("id_uncheck").value = "id_check"
                 opener.document.getElementById("userID").readOnly = true 
@@ -60,5 +60,5 @@
 
                 window.close()
             }
-        </script>
+    </script>
 </body>

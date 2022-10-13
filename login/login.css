@@ -82,6 +82,10 @@ body {
     cursor: pointer;
 }
 
+#login_section {
+    text-align: center;
+}
+
 @media screen and (max-width: 400px) {
     body {
         min-width: 0;

@@ -58,29 +58,32 @@
             <div class="left_sidebar_menu"></div>
 
             <!-- 왼쪽 서브 메뉴 -->
-            <div class="left_sub_menu">
+            <main class="left_sub_menu">
                 <div class="sub_menu">
                     <h2>부서</h2>
-                    <ul class="big_menu">
-                        <li class="team_menu">개발팀</li>    
-                        <ul class="small_menu" id="team_development">
-                            
+                    <section>
+                        <ul class="big_menu">
+                            <li class="team_menu">개발팀</li>    
+                            <ul class="small_menu" id="team_development">
+                            </ul>
                         </ul>
-                    </ul>
-
-                    <ul class="big_menu">
-                        <li class="team_menu">인사팀 <i class="arrow fas fa-angle-right"></i></li>
-                        <ul class="small_menu" id="team_hr">
+                    </section>
+                    <section>
+                        <ul class="big_menu">
+                            <li class="team_menu">인사팀 <i class="arrow fas fa-angle-right"></i></li>
+                            <ul class="small_menu" id="team_hr">
+                            </ul>
                         </ul>
-                    </ul>
-
-                    <ul class="big_menu">
-                        <li class="team_menu">마케팅팀</li>
-                        <ul class="small_menu" id="team_marketing">
+                    </section>
+                    <section>
+                        <ul class="big_menu">
+                            <li class="team_menu">마케팅팀</li>
+                            <ul class="small_menu" id="team_marketing">
+                            </ul>
                         </ul>
-                    </ul>
+                    </section>
                 </div>
-            </div>
+            </main>
 
             <div class="overlay"></div>
         </div>
