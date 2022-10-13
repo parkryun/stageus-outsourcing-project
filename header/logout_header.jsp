@@ -22,6 +22,6 @@
         </div>
     </header>
     
-    <div id="header"></div>
+    <div id="header_top_padding"></div>
 </body>
 </html>

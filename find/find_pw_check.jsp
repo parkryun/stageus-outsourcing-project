@@ -7,17 +7,15 @@
 <%@ page import="java.util.ArrayList"%>
 
 <%
-    // 받아오는 값에 대한 인코딩 지정
     request.setCharacterEncoding("utf-8");
 
-    // 받아오는 값을 저장
     String userID = request.getParameter("userID");
     String userName = request.getParameter("userName");
 
-    Class.forName("com.mysql.jdbc.Driver"); // 우리가 설치한 connecter 파일 가져오는 줄
+    Class.forName("com.mysql.jdbc.Driver");
     Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/outsourcing", "cono", "1234");
 
-    String sql = "SELECT * FROM users WHERE userID=?";
+    String sql = "SELECT userName FROM users WHERE userID=?";
     PreparedStatement query = connect.prepareStatement(sql);
     query.setString(1, userID);
 
@@ -25,12 +23,29 @@
     ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
     
     while(result.next()) {
-        ArrayList<String> tmpData = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
-        tmpData.add(result.getString(1));   
-        tmpData.add(result.getString(3));   
-        data.add(tmpData);  //2차원 배열에 이 배열 추가 
+        ArrayList<String> tmpData = new ArrayList<String>(); 
+        tmpData.add(result.getString(1));   // userName
+        data.add(tmpData);  
     }
-    session.setAttribute("userID", userID);
+    
+    // 아이디가 없을 때
+    if(data.size() == 0) {
+        out.print("<script>alert('아이디가 존재하지 않습니다.');</script>");
+        out.print("location.href = '../find/find_pw.jsp';");
+    }
+    else {
+        // 아이디가 있는데 이름이랑 같은경우
+        if(userName.equals(data.get(0).get(0))) {
+            session.setAttribute("userID", userID); // 아이디를 비밀번호 수정하는곳으로 보내서 해당 아이디 비밀번호를 바꾸는거지
+
+            response.sendRedirect("../find/update_pw.jsp");
+        }
+        // 아이디가 있는데 이름이랑 다른 경우
+        else {
+            out.print("<script>alert('아이디와 이름이 일치하지않습니다.');</script>");
+            out.print("<script>location.href = '../find/find_pw.jsp';</script>");
+        }
+    }
 
 %>
 <head>
@@ -41,13 +56,5 @@
     <link rel="stylesheet" type="text/css" href="../font.css">
 </head>
 <body>
-    <script>
-            if("<%=userName%>" == "<%=data.get(0).get(1)%>") {
-                location.href="update_pw.jsp"
-            }
-            else {
-                alert("아이디와 이름이 일치하지않습니다.")
-                location.href="find_pw.jsp"
-            }
-    </script>
+
 </body>

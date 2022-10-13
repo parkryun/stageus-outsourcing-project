@@ -90,7 +90,11 @@
                                 전화번호
                                 <img src="../red_star_img.png">
                             </th>
-                            <td><input type="text" id="userPhoneNum" name="userPhoneNum"></td>
+                            <td>
+                                <input type="text" id="userPhoneNum" name="userPhoneNum">
+                                <input type="button" onclick="phoneNumCheck()" name="phone_num_check" value="전화번호 확인">
+                                <input type="hidden" id="phone_num_uncheck" name="phone_num_duplication" value="phone_num_uncheck">
+                            </td>
                         </tr>
                         <tr>
                             <th>
@@ -161,6 +165,15 @@
             }
             else {
                 window.open("join_id_check_form.jsp?userID="+document.getElementById("userID").value,"", "width=400, height=350")
+            }
+        }
+
+        function phoneNumCheck() {
+            if(document.getElementById("userPhoneNum").value == "") {
+                alert("전화번호를 입력해주세요")
+            }
+            else {
+                window.open("join_phonenum_check_form.jsp?userPhoneNum="+document.getElementById("userPhoneNum").value,"", "width=400, height=350")
             }
         }
 

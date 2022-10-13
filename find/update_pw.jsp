@@ -19,27 +19,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>find pw</title>
+    <title>update pw</title>
     <link rel="stylesheet" type="text/css" href="update_pw.css">
     <link rel="stylesheet" type="text/css" href="../header/header.css">
     <link rel="stylesheet" type="text/css" href="../font.css">
        
-    <link rel="stylesheet" type="text/css" href="../side_bar/side_bar.css">
-    <link rel="stylesheet" type="text/css" href="../header/header.css">
     <link rel="stylesheet" type="text/css" href="assets/fontawesome-free/css/all.min.css">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" type="text/css" href="../side_bar/side_bar.css">
 </head>
 
 <body>
     <%
       String headerPage = "../header/header.jsp";
-      String sidebarPage = "../side_bar/side_bar.jsp";
     %>
     <jsp:include page="<%=headerPage%>" flush="false"/>
-    <jsp:include page="<%=sidebarPage%>" flush="false"/>
 
     <div id="find_pw_container">
         <div id="find_pw_logo">update PW</div>
@@ -70,6 +65,11 @@
             }
             else if(userPW_check.length == 0 || userPW_check == "") {
                 alert("수정할 비밀번호를 재확인해주세요")
+                return false
+            }
+            // 일치하지않을때
+            else if(userPW != userPW_check) {
+                alert("비밀번호가 일치하지않습니다.")
                 return false
             }
         }

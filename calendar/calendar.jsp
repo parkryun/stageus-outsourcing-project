@@ -12,7 +12,7 @@
     String calendarContent = request.getParameter("calendarContent");
     String calendarDate = request.getParameter("calendarDate");
     String calendarTime = request.getParameter("calendarTime");
-    String calendarSecond = ":00";
+    String calendarSecond = ":00"; //datetime이어서 초까지 추가
 
     calendarTime = calendarTime.concat(calendarSecond);
     calendarDate = calendarDate + " ";

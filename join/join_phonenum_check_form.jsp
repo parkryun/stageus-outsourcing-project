@@ -11,7 +11,7 @@
     request.setCharacterEncoding("utf-8");
 
     // 받아오는 값을 저장
-    String userID = request.getParameter("userID");
+    String userPhoneNum = request.getParameter("userPhoneNum");
 
 
 %>
@@ -24,25 +24,25 @@
 </head>
 <body>
 	<div style="text-align: center">
-	<h3> 아이디 중복확인 </h3>
-    <form action="join_id_check.jsp" onsubmit="return blankCheck(this)">
-        아이디 : <input type="text" id="userID" name="userID" maxlength="10" autofocus>
-        <input type="submit" value="중복확인">
+	<h3> 전화번호 확인 </h3>
+    <form action="join_phonenum_check.jsp" onsubmit="return blankCheck(this)">
+        전화번호 : <input type="text" id="userPhoneNum" name="userPhoneNum" maxlength="13" autofocus>
+        <input type="submit" value="확인">
     </form>
     </div>
     
 
     <script>
-        if("<%=userID%>" == "null") {
-           document.getElementById("userID").setAttribute("value", " ")
+        if("<%=userPhoneNum%>" == "null") {
+           document.getElementById("userPhoneNum").setAttribute("value", " ")
         }
         else {
-           document.getElementById("userID").setAttribute("value", "<%=userID%>")
+           document.getElementById("userPhoneNum").setAttribute("value", "<%=userPhoneNum%>")
         }
 
         function blankCheck() {
-            if(document.getElementById("userID").value.length == 0 || document.getElementById("userID").value == "" ) {
-                alert("아이디를 입력해주세요")
+            if(document.getElementById("userPhoneNum").value.length == 0 || document.getElementById("userPhoneNum").value == "" ) {
+                alert("전화번호를 입력해주세요")
                 return false
             }
         }

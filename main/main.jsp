@@ -10,15 +10,15 @@
 
 <%
     //날짜
+    SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
+
     Calendar c = Calendar.getInstance(); 
+    String today = format1.format(c.getTime());
     int month = c.get(Calendar.MONTH) + 1;
-    int year = c.get(Calendar.YEAR);
-    int day = c.get(Calendar.DATE);
     String calendarDate_month = Integer.toString(month);
 
     
     request.setCharacterEncoding("utf-8");
-
 
     String userID = (String)session.getAttribute("userID");
     String userName = (String)session.getAttribute("userName");
@@ -152,7 +152,8 @@
         // 가져온 값 정제
         today = Date.parse(today)
         calendarArray = JSON.parse(calendarArray)
-
+        
+        console.log(today)
         console.log(Date.parse(calendarArray[0][2]))
 
 
