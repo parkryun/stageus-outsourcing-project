@@ -14,7 +14,7 @@
     // 받아오는 값에 대한 인코딩 지정
     request.setCharacterEncoding("utf-8");
 
-
+    String userID = request.getParameter("userID");
     String team_name = request.getParameter("team_name");
 
     
@@ -50,25 +50,7 @@
         tmpData2.add('"' + result2.getString(1) + '"'); // 일정 내용  
         tmpData2.add(result2.getString(2)); // 일정 일
         data2.add(tmpData2);  //2차원 배열에 이 배열 추가 
-    }        
-    //=================================================쿼리3 사이드바 사용자
-
-    String sql3 = "SELECT * FROM users";
-    PreparedStatement query3 = connect.prepareStatement(sql3);
-
-    ResultSet result3 = query3.executeQuery();
-    ArrayList<ArrayList<String>> data3 = new ArrayList<ArrayList<String>>();
-    
-    while(result3.next()) {
-        ArrayList<String> tmpData3 = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
-        tmpData3.add(result3.getString(3));  
-        data3.add(tmpData3);  //2차원 배열에 이 배열 추가 
-    }  
-    
-//=================================================날짜
-    
-
-
+    }            
     
 %>
 <head>
@@ -96,7 +78,7 @@
     %>
     <jsp:include page="<%=headerPage%>" flush="false"/>
     <jsp:include page="<%=sidebarPage%>" flush="false"/>
-
+    <%=userID%>
     <div id="diary_container">
         <div id="diary_logo"><%=team_name%>의 diary</div>
         <div id="schedule_month">

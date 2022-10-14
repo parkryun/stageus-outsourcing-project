@@ -17,51 +17,78 @@
     int month = c.get(Calendar.MONTH) + 1;
     String calendarDate_month = Integer.toString(month);
 
-    
     request.setCharacterEncoding("utf-8");
 
-    String userID = (String)session.getAttribute("userID");
-    String userName = (String)session.getAttribute("userName");
-    String position = (String)session.getAttribute("position");
-
+    String requestUserID = request.getParameter("userID");
     
-    Class.forName("com.mysql.jdbc.Driver"); // 우리가 설치한 connecter 파일 가져오는 줄
-    Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/outsourcing", "cono", "1234");
+    Class.forName("com.mysql.jdbc.Driver");
+    Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/outsourcing", "cono", "1234");  
 
-    // =================================================쿼리1 사용자 이름
-    String sql = "SELECT userName FROM users WHERE userID=?";
-    PreparedStatement query = connect.prepareStatement(sql);
-    query.setString(1, userID);
+    // request 받을때
+    if(requestUserID == "null") {
+        String userID = (String)session.getAttribute("userID");
+        String userName = (String)session.getAttribute("userName");
+        String position = (String)session.getAttribute("position");
+    
+        //================= 캘린더
 
-    ResultSet result = query.executeQuery();
-    ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
+        String sql2 = "SELECT calendarContent, DAY(calendarDate), calendarDate, calendarNum, HOUR(calendarDate), MINUTE(calendarDate) FROM calendar WHERE userID=? AND MONTH(calendarDate)=? ORDER BY DAY(calendarDate) ASC"; // 조건으로 해당 날짜 나중에 팀 할때도 조건으로 올때도 월을 넘겨줘야지 다음달 할때도 폼에다가 10 벨류값 넣어서 보내줘서 가져오는거
+        PreparedStatement query2 = connect.prepareStatement(sql2);
+        query2.setString(1, userID);
+        query2.setString(2, calendarDate_month);
+    
+        ResultSet result2 = query2.executeQuery();
+        ArrayList<ArrayList<String>> data2 = new ArrayList<ArrayList<String>>(); // var변수는 data2로 해서 배열 가져옴
         
-    while(result.next()) {
-        ArrayList<String> tmpData = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
-        tmpData.add(result.getString(1));   
-        data.add(tmpData);  //2차원 배열에 이 배열 추가 
+        while(result2.next()) {
+            ArrayList<String> tmpData2 = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
+            tmpData2.add('"' + result2.getString(1) + '"'); // 일정 내용  
+            tmpData2.add(result2.getString(2)); // 일정 일
+            tmpData2.add('"' + result2.getString(3) + '"'); // 일정 날짜
+            tmpData2.add(result2.getString(4)); // 일정 번호
+            tmpData2.add(result2.getString(5)); // 일정 시
+            tmpData2.add(result2.getString(6)); // 일정 분
+            data2.add(tmpData2);  //2차원 배열에 이 배열 추가 
+        }    
     }
-
-    //=================================================쿼리2 캘린더
-
-    String sql2 = "SELECT calendarContent, DAY(calendarDate), calendarDate, calendarNum, HOUR(calendarDate), MINUTE(calendarDate) FROM calendar WHERE userID=? AND MONTH(calendarDate)=? ORDER BY DAY(calendarDate) ASC"; // 조건으로 해당 날짜 나중에 팀 할때도 조건으로 올때도 월을 넘겨줘야지 다음달 할때도 폼에다가 10 벨류값 넣어서 보내줘서 가져오는거
-    PreparedStatement query2 = connect.prepareStatement(sql2);
-    query2.setString(1, userID);
-    query2.setString(2, calendarDate_month);
-
-    ResultSet result2 = query2.executeQuery();
-    ArrayList<ArrayList<String>> data2 = new ArrayList<ArrayList<String>>(); // var변수는 data2로 해서 배열 가져옴
+    // 안받을때
+    else {
+        setstring에 sesstion Id 값 넣는거 
+        // =================================================쿼리1 사용자 이름 세션으로 받지 못하니까
+        String sql = "SELECT userName FROM users WHERE userID=?";
+        PreparedStatement query = connect.prepareStatement(sql);
+        query.setString(1, userID);
     
-    while(result2.next()) {
-        ArrayList<String> tmpData2 = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
-        tmpData2.add('"' + result2.getString(1) + '"'); // 일정 내용  
-        tmpData2.add(result2.getString(2)); // 일정 일
-        tmpData2.add('"' + result2.getString(3) + '"'); // 일정 날짜
-        tmpData2.add(result2.getString(4)); // 일정 번호
-        tmpData2.add(result2.getString(5)); // 일정 시
-        tmpData2.add(result2.getString(6)); // 일정 분
-        data2.add(tmpData2);  //2차원 배열에 이 배열 추가 
-    }      
+        ResultSet result = query.executeQuery();
+        ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
+            
+        while(result.next()) {
+            ArrayList<String> tmpData = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
+            tmpData.add(result.getString(1));   
+            data.add(tmpData);  //2차원 배열에 이 배열 추가 
+        }
+        
+        //=================================================쿼리2 캘린더
+
+        String sql2 = "SELECT calendarContent, DAY(calendarDate), calendarDate, calendarNum, HOUR(calendarDate), MINUTE(calendarDate) FROM calendar WHERE userID=? AND MONTH(calendarDate)=? ORDER BY DAY(calendarDate) ASC"; // 조건으로 해당 날짜 나중에 팀 할때도 조건으로 올때도 월을 넘겨줘야지 다음달 할때도 폼에다가 10 벨류값 넣어서 보내줘서 가져오는거
+        PreparedStatement query2 = connect.prepareStatement(sql2);
+        query2.setString(1, userID);
+        query2.setString(2, calendarDate_month);
+    
+        ResultSet result2 = query2.executeQuery();
+        ArrayList<ArrayList<String>> data2 = new ArrayList<ArrayList<String>>(); // var변수는 data2로 해서 배열 가져옴
+        
+        while(result2.next()) {
+            ArrayList<String> tmpData2 = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
+            tmpData2.add('"' + result2.getString(1) + '"'); // 일정 내용  
+            tmpData2.add(result2.getString(2)); // 일정 일
+            tmpData2.add('"' + result2.getString(3) + '"'); // 일정 날짜
+            tmpData2.add(result2.getString(4)); // 일정 번호
+            tmpData2.add(result2.getString(5)); // 일정 시
+            tmpData2.add(result2.getString(6)); // 일정 분
+            data2.add(tmpData2);  //2차원 배열에 이 배열 추가 
+        }    
+    }
 %>  
 <head>
     <meta charset="UTF-8">

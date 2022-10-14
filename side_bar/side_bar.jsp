@@ -17,7 +17,7 @@
     Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/outsourcing", "cono", "1234");
 
     //=================================================쿼리3 사용자 사이드바 표시 **사용자 제외
-    String sql3 = "SELECT userName, department, position FROM users WHERE userID NOT IN (?)";
+    String sql3 = "SELECT userName, department, position, userID FROM users WHERE userID NOT IN (?)";
     PreparedStatement query3 = connect.prepareStatement(sql3);
     query3.setString(1, userID);
 
@@ -29,6 +29,7 @@
         tmpData3.add('"' + result3.getString(1) + '"');   // 이름 
         tmpData3.add('"' + result3.getString(2) + '"');   // 부서 
         tmpData3.add('"' + result3.getString(3) + '"');   // 직급 
+        tmpData3.add('"' + result3.getString(4) + '"');   // main으로 보낼 id 
         data3.add(tmpData3); 
     }  
 %>
@@ -167,12 +168,15 @@
                     var workerForm = document.createElement('form')
                     var workerSubmit = document.createElement('input')
 
-                    workerForm.action = "../main/user_main.jsp"
-
                     workerSubmit.setAttribute("type", "submit")
-                    workerSubmit.setAttribute("name", "team_name")
+                    workerSubmit.setAttribute("name", "userID")
                     workerSubmit.setAttribute("value", workerArray[index][0]) 
                     workerSubmit.className = "team_development_submit"
+
+                    workerForm.action = "../main/main.jsp"
+                    workerForm.onsubmit = function() {
+                        return submitIDToMain(index)
+                    }
 
                     document.getElementById("team_development").appendChild(workerLi)
                     workerLi.appendChild(workerForm)
@@ -183,12 +187,15 @@
                     var workerForm = document.createElement('form')
                     var workerSubmit = document.createElement('input')
 
-                    workerForm.action = "../main/user_main.jsp"
-
                     workerSubmit.setAttribute("type", "submit")
-                    workerSubmit.setAttribute("name", "team_name")
+                    workerSubmit.setAttribute("name", "userID")
                     workerSubmit.setAttribute("value", workerArray[index][0])
                     workerSubmit.className = "team_hr_submit"
+
+                    workerForm.action = "../main/main.jsp"
+                    workerForm.onsubmit = function() {
+                        return submitIDToMain(index)
+                    }
 
                     document.getElementById("team_hr").appendChild(workerLi)
                     workerLi.appendChild(workerForm)
@@ -199,12 +206,15 @@
                     var workerForm = document.createElement('form')
                     var workerSubmit = document.createElement('input')
 
-                    workerForm.action = "../main/user_main.jsp"
-
                     workerSubmit.setAttribute("type", "submit")
-                    workerSubmit.setAttribute("name", "team_name")
+                    workerSubmit.setAttribute("name", "userID")
                     workerSubmit.setAttribute("value", workerArray[index][0])
                     workerSubmit.className = "team_marketing_submit"
+
+                    workerForm.action = "../main/main.jsp"
+                    workerForm.onsubmit = function() {
+                        return submitIDToMain(index)
+                    }
 
                     document.getElementById("team_marketing").appendChild(workerLi)
                     workerLi.appendChild(workerForm)
@@ -236,6 +246,11 @@
         for(var index = 0; index < submitButton.length; index++) {
         submitButton[index].disabled = true // 버튼 비활성
     }
+    }
+    
+    function submitIDToMain(arrayNum) {
+        $(".team_development_submit").attr("value", workerArray[arrayNum][3]); // value에 아이디를 넣는거지
+        $(".team_development_submit").attr("action", "../main/main.jsp");
     }
     </script>
 </body>
