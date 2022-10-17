@@ -43,7 +43,7 @@
 
         if(userPhonecheck.length == 0) {
             opener.document.getElementById("userPhoneNum").value = "<%=userPhoneNum%>"
-            opener.document.getElementById("id_uncheck").value = "id_check"
+            opener.document.getElementById("phoneNum_uncheck").value = "phoneNum_check"
             opener.document.getElementById("userPhoneNum").readOnly = true 
             alert("사용 가능한 전화번호입니다.")
 

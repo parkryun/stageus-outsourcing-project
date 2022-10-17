@@ -19,28 +19,14 @@
     int today_year = c.get(Calendar.YEAR);
     int today_day = c.get(Calendar.DATE);
 
-    // =================================================받아오는 값에 대한 인코딩 지정
     request.setCharacterEncoding("utf-8");
 
-
+    String userName = (String)session.getAttribute("userName");
     String userID = (String)session.getAttribute("userID");
-
     
-    Class.forName("com.mysql.jdbc.Driver"); // 우리가 설치한 connecter 파일 가져오는 줄
+    Class.forName("com.mysql.jdbc.Driver"); 
     Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/outsourcing", "cono", "1234");
 
-    String sql = "SELECT * FROM users WHERE userID=?";
-    PreparedStatement query = connect.prepareStatement(sql);
-    query.setString(1, userID);
-
-    ResultSet result = query.executeQuery();
-    ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
-        
-    while(result.next()) {
-        ArrayList<String> tmpData = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
-        tmpData.add(result.getString(3));   
-        data.add(tmpData);  //2차원 배열에 이 배열 추가 
-    }
 
 //=================================================쿼리2 캘린더
 
@@ -62,22 +48,6 @@ while(result2.next()) {
     tmpData2.add(result2.getString(6)); // 일정 분
     data2.add(tmpData2);  //2차원 배열에 이 배열 추가 
 }     
-
-//=================================================쿼리3 팀원
-
-    String sql3 = "SELECT * FROM users";
-    PreparedStatement query3 = connect.prepareStatement(sql3);
-
-    ResultSet result3 = query3.executeQuery();
-    ArrayList<ArrayList<String>> data3 = new ArrayList<ArrayList<String>>();
-    
-    while(result3.next()) {
-        ArrayList<String> tmpData3 = new ArrayList<String>(); // 2차원 배열에 들어갈 배열 생성
-        tmpData3.add(result3.getString(3));  
-        data3.add(tmpData3);  //2차원 배열에 이 배열 추가 
-    }  
-    String team_Name = data3.get(0).get(0);
-
     
 %>
 <head>
@@ -108,7 +78,7 @@ while(result2.next()) {
     <jsp:include page="<%=sidebarPage%>" flush="false"/>
 
     <div id="diary_container">
-        <div id="diary_logo"><%=data.get(0).get(0)%>의 diary</div>
+        <div id="diary_logo"><%=userName%>의 diary</div>
         <form action="../calendar/calendar.jsp" id="diary_write_container">
             <div>일정 작성하기</div>
             <div id="diary_content">

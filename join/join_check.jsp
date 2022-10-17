@@ -15,9 +15,15 @@
     String userPW = request.getParameter("userPW");
     String userName = request.getParameter("userName");
     String userPhoneNum = request.getParameter("userPhoneNum");
-    String userEmail = request.getParameter("userEmail");
     String department = request.getParameter("department");
     String position = request.getParameter("position");
+
+    
+    String userEmail1 = request.getParameter("userEmail1");
+    String userEmail2 = request.getParameter("userEmail2");
+    userEmail1 = userEmail1 + "@";
+    String userEmail = userEmail1.concat(userEmail2);
+    
 
     Class.forName("com.mysql.jdbc.Driver"); 
     Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/outsourcing", "cono", "1234");

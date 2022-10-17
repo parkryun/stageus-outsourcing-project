@@ -14,8 +14,7 @@
     // 받아오는 값에 대한 인코딩 지정
     request.setCharacterEncoding("utf-8");
 
-    String userID = request.getParameter("userID");
-    String team_name = request.getParameter("team_name");
+    String team_name = request.getParameter("requestName");
 
     
     Class.forName("com.mysql.jdbc.Driver"); // 우리가 설치한 connecter 파일 가져오는 줄
@@ -35,7 +34,6 @@
     }
 
     String team_ID = data.get(0).get(0);
-
 //=================================================쿼리2 캘린더
     String sql2 = "SELECT calendarContent, DAY(calendarDate) FROM calendar WHERE userID=? AND MONTH(calendarDate)=? ORDER BY DAY(calendarDate) ASC"; // 조건으로 해당 날짜 나중에 팀 할때도 조건으로 올때도 월을 넘겨줘야지 다음달 할때도 폼에다가 10 벨류값 넣어서 보내줘서 가져오는거
     PreparedStatement query2 = connect.prepareStatement(sql2);
@@ -78,7 +76,6 @@
     %>
     <jsp:include page="<%=headerPage%>" flush="false"/>
     <jsp:include page="<%=sidebarPage%>" flush="false"/>
-    <%=userID%>
     <div id="diary_container">
         <div id="diary_logo"><%=team_name%>의 diary</div>
         <div id="schedule_month">

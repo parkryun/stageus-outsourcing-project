@@ -39,9 +39,11 @@ td {
     border-right: 0;
     padding: 8px 10px 8px 10px;
     width: 750px;
+    font-family: initial;
 }
 
 input[type=text] {
+    width: 100px;
     height: 22px;
     border: 1px solid #e5e5e5;
     color: #353535;
@@ -49,6 +51,7 @@ input[type=text] {
 }
 
 input[type=password] {
+    width: 100px;
     height: 22px;
     border: 1px solid #e5e5e5;
     color: #353535;
@@ -100,6 +103,10 @@ select {
 
 #join_container {
     text-align: center;
+}
+
+#userEmail1 {
+    width: 80px;
 }
 
 @media screen and (max-width: 400px) { 

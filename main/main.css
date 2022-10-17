@@ -1,3 +1,11 @@
+ul {
+    margin-bottom: 10px;
+}
+
+li {
+    list-style-type: none;
+}
+
 tr {
     display: flex;
     justify-content: space-between;
@@ -78,12 +86,14 @@ textarea:focus {
     color: #2a2c2d;
     font-size: 14px;
     font-family: helvetica;
-    width: 180px
+    width: 180px;
+    cursor: pointer;
 }
 
 #calendar_date {
     border: none;
     height: 30px;
+    cursor: pointer;
 }
 
 #diary_write_button {
@@ -174,18 +184,23 @@ textarea:focus {
 
 #prev_month_submit {
     background-image: url(../main/arrow_back.png);
-    background-size: contain;
     font-size: 0px;
     width: 30px;
     height: 30px;
+    border: 0;
+    cursor: pointer;
+    margin: 8px 0px 8px 10px;
 }
 
 #next_month_submit {
     background-image: url(../main/arrow_forward.png);
-    background-size: contain;
     font-size: 0px;
     width: 30px;
-    height: 25px;
+    height: 30px;
+    border: 0;
+    cursor: pointer;
+    margin: 8px 0px 8px 10px;
+    height: 30px;
 }
 
 .schedule_update_remove_finish_btn {
@@ -212,7 +227,7 @@ textarea:focus {
     float: right;
     width: 40px;
     height: 28px;
-    background-color: #42b72a;
+    background-color: #e05162;
     border: none;
     border-radius: 5px;
     color: #fff;
@@ -229,10 +244,35 @@ textarea:focus {
     font-size: 20px;
 }
 
-.calendar_day_li {
-    /* float: left; */
+.calendar_td_update_button {
+    height: 28px;
+    background-color: #42b72a;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
 }
 
+.calendar_update_textarea {
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+    background-color: #f0f2f5;
+    outline: none;
+    font-size: 15px;
+    font-weight: 200;
+    word-break: break-all;
+    height: 40px;
+}
+
+.calendar_td_update_submit {
+    border: 0;
+    cursor: pointer;
+}
+
+
+
+/* ============================================================================== */
 @media screen and (max-width: 400px) {
     body {
         width: 100%;

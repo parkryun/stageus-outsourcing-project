@@ -9,14 +9,14 @@
 <%
     request.setCharacterEncoding("utf-8");
     int calendarNum = Integer.parseInt(request.getParameter("calendarNum"));
-    String updateCalenarContent = request.getParameter("updateCalenarContent")
+    String updateCalendarContent = request.getParameter("updateCalendarContent");
 
     Class.forName("com.mysql.jdbc.Driver"); 
     Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/outsourcing", "cono", "1234");
 
     String sql = "UPDATE calendar SET calendarContent=? WHERE calendarNum=?";
     PreparedStatement query = connect.prepareStatement(sql);
-    query.setString(1, updateCalenarContent);
+    query.setString(1, updateCalendarContent);
     query.setInt(2, calendarNum);
 
     query.executeUpdate();
@@ -34,7 +34,7 @@
 
     <script>
         alert("수정 완료")
-        location.href="../main/main.jsp"
+        location.href = "../main/main.jsp"
     </script>
     
 </body>

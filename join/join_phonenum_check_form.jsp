@@ -27,7 +27,7 @@
 	<h3> 전화번호 확인 </h3>
     <form action="join_phonenum_check.jsp" onsubmit="return blankCheck(this)">
         전화번호 : <input type="text" id="userPhoneNum" name="userPhoneNum" maxlength="13" autofocus>
-        <input type="submit" value="확인">
+        <input type="submit" value="중복확인">
     </form>
     </div>
     

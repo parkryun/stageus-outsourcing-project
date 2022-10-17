@@ -40,7 +40,7 @@
     // 아이디 존재x
     if(checkId == 0) {
         out.print("<script>alert('아이디가 존재하지 않습니다.');</script>");
-        out.print("location.href = '../login/login.jsp';");
+        out.print("<script>location.href = '../login/login.jsp';</script>");
     }
     // 아이디 존재
     else {

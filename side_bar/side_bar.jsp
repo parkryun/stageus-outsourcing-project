@@ -92,28 +92,30 @@
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script type="text/javascript">
             $(function () {
-                $(".left_sub_menu").hide();
-                $('.left_sidebar_menu').hide();
-                $('.overlay').hide();
+                $(".left_sub_menu").hide()
+                $('.left_sidebar_menu').hide()
+                $('.overlay').hide()
 
                 $(".sidebar_open_button").click(function () {
-                    $(".left_sub_menu").fadeToggle(300);
-                    $('.left_sidebar_menu').fadeIn();
-                    $('.overlay').fadeIn();
-                });
+                    $(".left_sub_menu").fadeToggle(300)
+                    $('.left_sidebar_menu').fadeIn()
+                    $('.overlay').fadeIn()
+                })
+
                 // 왼쪽메뉴 드롭다운
                 $(".sub_menu ul.small_menu").hide();
                 $(".sub_menu ul.big_menu").click(function () {
-                    $("ul", this).slideToggle(300);
-                });
+                    $("ul", this).slideToggle(300)
+                })
+
                 // 외부 클릭 시 좌측 사이드 메뉴 숨기기
                 $('.overlay').on('click', function () {
-                    $('.left_sub_menu').fadeOut();
-                    $('.hide_sidemenu').fadeIn();
-                    $('.overlay').fadeOut();
-                    $('.left_sidebar_menu').fadeOut();
-                });
-            });
+                    $('.left_sub_menu').fadeOut()
+                    $('.hide_sidemenu').fadeIn()
+                    $('.overlay').fadeOut()
+                    $('.left_sidebar_menu').fadeOut()
+                })
+            })
     </script>
     <script>
             // 사용자 변수
@@ -169,7 +171,7 @@
                     var workerSubmit = document.createElement('input')
 
                     workerSubmit.setAttribute("type", "submit")
-                    workerSubmit.setAttribute("name", "userID")
+                    workerSubmit.setAttribute("name", "requestName")
                     workerSubmit.setAttribute("value", workerArray[index][0]) 
                     workerSubmit.className = "team_development_submit"
 
@@ -188,7 +190,7 @@
                     var workerSubmit = document.createElement('input')
 
                     workerSubmit.setAttribute("type", "submit")
-                    workerSubmit.setAttribute("name", "userID")
+                    workerSubmit.setAttribute("name", "requestName")
                     workerSubmit.setAttribute("value", workerArray[index][0])
                     workerSubmit.className = "team_hr_submit"
 
@@ -207,7 +209,7 @@
                     var workerSubmit = document.createElement('input')
 
                     workerSubmit.setAttribute("type", "submit")
-                    workerSubmit.setAttribute("name", "userID")
+                    workerSubmit.setAttribute("name", "requestName")
                     workerSubmit.setAttribute("value", workerArray[index][0])
                     workerSubmit.className = "team_marketing_submit"
 
